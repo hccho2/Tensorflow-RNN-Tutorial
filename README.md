@@ -2,7 +2,7 @@
 # <span style="color:red"> tf.contrib.seq2seq.dynamic_decode </span>
 
 	
-
+![decode](./dynamic-rnn-decode.png)
 
 ---
 ### [code sample]
