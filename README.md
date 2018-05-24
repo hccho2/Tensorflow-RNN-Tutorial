@@ -1,11 +1,13 @@
 # Tensorflow에서 tf.contrib.seq2seq.dynamic_decode를 어떻게 사용해야 하는지 설명.
-# <span style="color:red"> tf.contrib.seq2seq.dynamic_decode </span>
+아래 그림은 tf.nn.dynamic_rnn과 tf.contrib.seq2seq.dynamic_decode의 입력 구조를 비교한 그림이다.
 
-	
 ![decode](./dynamic-rnn-decode.png)
 
+ * TrainingHelper는 training 단계에서 사용하고, GreedyEmbeddingHelper는 inference 단계에서 사용하면 된다.
+
+
 ---
-### [code sample]
+### [main code]
 ```rust
 # -*- coding: utf-8 -*-
 
