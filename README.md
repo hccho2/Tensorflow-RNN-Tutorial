@@ -1,4 +1,4 @@
-# Tensorflow에서 tf.contrib.seq2seq.dynamic_decode가 어떻게 사용해야 하는지 설명.
+# Tensorflow에서 tf.contrib.seq2seq.dynamic_decode를 어떻게 사용해야 하는지 설명.
 # <span style="color:red"> tf.contrib.seq2seq.dynamic_decode </span>
 
 	
