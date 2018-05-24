@@ -2,7 +2,8 @@
 아래 그림은 tf.nn.dynamic_rnn과 tf.contrib.seq2seq.dynamic_decode의 입력 구조를 비교한 그림이다.
 
 ![decode](./dynamic-rnn-decode.png)
-
+ * cell은 BasicRNNCell,BasicLSTMCell,GRUCell이 올 수 있고, 이런 것들은 쌓은 MultiRNNCell도 올 수 있다.
+ * initial_state는 hidden state의 초기값으로 zero_state, encoder의 마지막  hidden state, captioning model에서 image의 feature등이 올 수 있다.
  * TrainingHelper는 training 단계에서 사용하고, GreedyEmbeddingHelper는 inference 단계에서 사용하면 된다.
 
 
