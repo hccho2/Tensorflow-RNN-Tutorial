@@ -116,6 +116,7 @@ outputs, last_state, last_sequence_lengths = tf.contrib.seq2seq.dynamic_decode(d
 ---
 * 이후의 코드는 Neural Net 모형을 아는 사람은 어렵지 않게 이해할 수 있기 때문에 추가적인 설명은 생략한다.
 * 또한, tf.contrib.seq2seq.sequence_loss에서 계산해 주는 loss값과 cross entropy loss를 직접 계산한 값이 일치하는지도 확인하고 있다.
+* tf.contrib.seq2seq.sequence_loss의 targets은 one-hot으로 변환되지 않은 값이 전달된다.
 * 기타 여러가지 확인할 부분을 출력하는 코드가 추가되어 있다.
 
 
