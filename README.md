@@ -23,8 +23,8 @@
  
  
 ---
-### [main code]
-##1
+### main code
+
 ```rust
 # -*- coding: utf-8 -*-
 
