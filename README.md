@@ -77,7 +77,7 @@ embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 if init_state_flag==0:
     initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
 else:
-    h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
+    h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적절한 값을 외부에서 받아와야 함.
     if state_tuple_mode: 
         initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)          
     else:
