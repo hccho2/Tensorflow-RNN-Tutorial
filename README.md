@@ -8,7 +8,7 @@
  * GreedyEmbeddingHelper는 inference에 사용하는 hleper로 전단계의 output의 argmax에 해당하는 결과를 다음 단계의 input으로 전달된다.
  
 ### [code 설명]
- * 전체 코드는 RNN-TF-dynamic-decode.py에 있고, 이 페이지의 [아래](#1main-code)에서도 확인할 수 있다.
+ * 전체 코드는 RNN-TF-dynamic-decode.py에 있고, 이 페이지의 [아래](#main-code)에서도 확인할 수 있다.
 
 
  
