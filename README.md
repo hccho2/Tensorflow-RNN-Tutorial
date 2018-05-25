@@ -62,7 +62,7 @@ embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initia
 inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
 ```
 
-* 각 단어를 embedding할 수 있는 변수를 만든다. vocab_size x embedding_dim만큼의 변수가 필요하다.
+* 각 단어를 embedding vector로 변환할 수 있는 변수를 만든다. vocab_size x embedding_dim만큼의 변수가 필요하다.
 * embedding변수가 만들어지면, embedding_lookup을 통해, x_data를 embedding vector로 변환한다.
 * 참고로 embedding vector를 만들때 초기값을 아래와 같이 0,1,2,...로 지정하여 embedding vector로 변환이 어떻게 이루어지는지 확인해 볼 수도 있다.
 ```python
@@ -71,6 +71,30 @@ embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 
 ```
 
+---
+---
+```python
+if init_state_flag==0:
+	 initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
+else:
+	if state_tuple_mode:
+		h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
+		initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
+		
+	else:
+		h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
+		initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
+
+```
+* 이제 RNN cell의 hidden state의 초기값을 지정하는 코드를 살펴보자.
+* hidden state의 초기값은 cell.zero_state(batch_size, tf.float32)와 같이 0으로 지정하는 경우도 있고,
+* encoder-decoder 모델에서의 decoder의 hidden state 초기값은 encoder의 마지막 hidden state값을 받아오기도 한다.
+* image에 caption을 생성하는 모델에서는 image의 추상화된 feature를 초기값으로 사용할 수도 있다.
+* 우리의 경우, init_state_flag==0인 경우는 0으로 초기화 했다.
+* init_state_flag가 0이 아니면, 밖에서 받아온 값으로 초기화해야 하는데, 예를 위해서 h0 = tf.random_normal([batch_size,hidden_dim])를 사용했다.
+* LSTM cell에서는 c_state와 h_state가 있기 때문에 각각의 값을 지정해야함.
+* 우리는 LSTM cell을 multi로 쌓았기 때문에, 제일 아래 층만 초기값을 주고, 나머지는 0으로 초기화.
+* 제일 아래층에서도 c_state는 0으로 초기화하고, h_state는 h0값으로 초기화 했다.
 
 
 
