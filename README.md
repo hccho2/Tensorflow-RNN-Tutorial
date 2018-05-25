@@ -73,27 +73,24 @@ embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 
 ---
 ---
+* 이제 RNN cell의 hidden state의 초기값을 지정하는 코드를 살펴보자.
 ```python
 if init_state_flag==0:
-	 initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
+    initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
 else:
-	if state_tuple_mode:
-		h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
-		initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
-		
-	else:
-		h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
-		initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
+    h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적정한 값을 외부에서 받아와야 함.
+        initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
+    else:
+        initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
 
 ```
-* 이제 RNN cell의 hidden state의 초기값을 지정하는 코드를 살펴보자.
 * hidden state의 초기값은 cell.zero_state(batch_size, tf.float32)와 같이 0으로 지정하는 경우도 있고,
 * encoder-decoder 모델에서의 decoder의 hidden state 초기값은 encoder의 마지막 hidden state값을 받아오기도 한다.
 * image에 caption을 생성하는 모델에서는 image의 추상화된 feature를 초기값으로 사용할 수도 있다.
-* 우리의 경우, init_state_flag==0인 경우는 0으로 초기화 했다.
+* 우리의 경우, init_state_flag==0인 경우는 0으로 초기화 했고,
 * init_state_flag가 0이 아니면, 밖에서 받아온 값으로 초기화해야 하는데, 예를 위해서 h0 = tf.random_normal([batch_size,hidden_dim])를 사용했다.
 * LSTM cell에서는 c_state와 h_state가 있기 때문에 각각의 값을 지정해야함.
-* 우리는 LSTM cell을 multi로 쌓았기 때문에, 제일 아래 층만 초기값을 주고, 나머지는 0으로 초기화.
+* 우리는 LSTM cell을 multi로 쌓았기 때문에, 제일 아래 층만 지정된 값을 주고, 나머지 층은 0으로 초기화.
 * 제일 아래층에서도 c_state는 0으로 초기화하고, h_state는 h0값으로 초기화 했다.
 
 
@@ -166,12 +163,10 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     if init_state_flag==0:
          initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
     else:
-        if state_tuple_mode:
-            h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
-            initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
-            
+        h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적정한 값을 외부에서 받아와야 함.
+        if state_tuple_mode: 
+            initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)          
         else:
-            h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
             initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
     if train_mode:
         helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size))
