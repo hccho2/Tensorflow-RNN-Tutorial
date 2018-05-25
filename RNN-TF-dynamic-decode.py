@@ -39,6 +39,8 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     cell = tf.contrib.rnn.MultiRNNCell(cells)    
     #cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_dim)
 
+    #init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 이경우는 아래의 embedding의 get_variable에서 shape을 지정하면 안된다.
+    init = tf.contrib.layers.xavier_initializer()
     embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initializer=init,dtype = tf.float32)
     inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
 
@@ -47,12 +49,10 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     if init_state_flag==0:
          initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
     else:
-        if state_tuple_mode:
-            h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
-            initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
-            
+        h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
+        if state_tuple_mode: 
+            initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)          
         else:
-            h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
             initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
     if train_mode:
         helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size))
