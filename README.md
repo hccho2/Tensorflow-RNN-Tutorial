@@ -3,7 +3,7 @@
 
 ![decode](./dynamic-rnn-decode.png)
  * Tensorflow에서는 seq2seq(encoder-decoder) 모델을 다룰 수 있는 dynamic_rnn, dynamic_decode를 제공하고 있다.
- * dynamic_rnn은 좀 더 단순한 구조로 되어 있는데, 여기서는 dynamic_decode를 이용해서 설명한다.
+ * dynamic_rnn은 좀 더 단순한 구조로 되어 있는데, 여기서는 dynamic_decode를 설명한다.
  * cell은 BasicRNNCell,BasicLSTMCell,GRUCell이 올 수 있고, 이런 것들은 쌓은 MultiRNNCell도 올 수 있다.
  * initial_state는 hidden state의 초기값으로 zero_state, encoder의 마지막  hidden state, captioning model에서 image의 feature등이 올 수 있다.
  * TrainingHelper는 training 단계에서 사용하고, GreedyEmbeddingHelper는 inference 단계에서 사용하면 된다.
@@ -11,7 +11,7 @@
  
 ### [code 설명]
  * 전체 코드는 RNN-TF-dynamic-decode.py에 있고, 이 페이지의 [아래](#full-code)에서도 확인할 수 있다.
- * 이제 코드의 시작부터 잘라서 설명해 보자.
+ * 이제 코드의 시작부터 부분, 부분 설명해 보자.
 ```python
 vocab_size = 5
 SOS_token = 0
@@ -39,9 +39,9 @@ init_state_flag = 0
 train_mode = True
 ```
 * output_dim은 RNN cell의 output에 연결되는 FC layer의 출력 dimension이다. 보통의 경우 단어 개수와 동일한 dimension이다. 그래서 output_dim = vocab_size
-* batch_size는 추가 설명 불필요.
+* batch_size는 추가 설명 불필요^^
 * hidden_dim은 말 그대로 RNN cell의 hidden layer size.
-* num_layer는 Multi RNN모델에서 RNN layer를 몇 층으로 쌓을지 결정하는 값. 예를 들어, num_layer만큼 LSTM cell을 쌓는다.
+* num_layer는 Multi RNN모델에서 RNN layer를 몇 층으로 쌓을지 결정하는 값. 즉, num_layer만큼 LSTM cell을 쌓는다.
 * embedding_dim은 각 단어를 몇 차원 vector로 mapping할지 결정하는 변수.
 * 나머지 3개 변수(state_tuple_mode,init_state_flag,train_mode)는 코드 상의 옵션을 설정하는 변수로 중요한 것은 아님. 차차 설명.
 
@@ -77,11 +77,11 @@ embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 if init_state_flag==0:
     initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
 else:
-    h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적절한 값을 외부에서 받아와야 함.
-        initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
+    h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
+    if state_tuple_mode: 
+        initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)          
     else:
         initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
-
 ```
 * hidden state의 초기값은 cell.zero_state(batch_size, tf.float32)와 같이 0으로 지정하는 경우도 있고,
 * encoder-decoder 모델에서의 decoder의 hidden state 초기값은 encoder의 마지막 hidden state값을 받아오기도 한다.
