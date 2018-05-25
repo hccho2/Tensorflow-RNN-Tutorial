@@ -56,10 +56,20 @@ cell = tf.contrib.rnn.MultiRNNCell(cells)
 * BasicLSTMCell의 state_is_tuple항목은 c_state와 h_state(m_state라고 하기도 함)를 tuple형태로 관리할 지, 그냥 이어서 하나로 관리할 지 정하는 항목인데, model구조에 영향을 주는 것은 아니다.
 * Tensorflow에서는 tuple로 관리할 것을 권장하고 있다.
 
+```rust
+init = tf.contrib.layers.xavier_initializer()
+embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initializer=init,dtype = tf.float32)
+inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
+```
 
+* 각 단어를 embedding할 수 있는 변수를 만든다. vocab_size x embedding_dim만큼의 변수가 필요하다.
+* embedding변수가 만들어지면, embedding_lookup을 통해, x_data를 embedding vector로 변환한다.
+* 참고로 embedding vector를 만들때 초기값을 아래와 같이 0,1,2,...로 지정하여 embedding vector로 변환이 어떻게 이루어지는지 확인해 볼 수도 있다.
+```rust
+init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 아래 embedding의 get_variable에서 shape을 지정하면 안된다.
+embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 
-
-
+```
 
 
 
@@ -121,10 +131,9 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     cell = tf.contrib.rnn.MultiRNNCell(cells)    
     #cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_dim)
 
-	
-	#init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 이경우는 아래의 embedding의 get_variable에서 shape을 지정하면 안된다.
-	init = tf.contrib.layers.xavier_initializer()
-	
+
+    #init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 이경우는 아래의 embedding의 get_variable에서 shape을 지정하면 안된다.
+    init = tf.contrib.layers.xavier_initializer()
     embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initializer=init,dtype = tf.float32)
     inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
 
