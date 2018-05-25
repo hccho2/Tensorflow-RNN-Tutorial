@@ -12,7 +12,7 @@
 ### [code 설명]
  * 전체 코드는 RNN-TF-dynamic-decode.py에 있고, 이 페이지의 [아래](#full-code)에서도 확인할 수 있다.
  * 이제 코드의 시작부터 잘라서 설명해 보자.
-```rust
+```python
 vocab_size = 5
 SOS_token = 0
 EOS_token = 4
@@ -26,7 +26,7 @@ y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_to
  * Tensorflow의 data 입력 op인 placeholder를 사용해야하는데, 여기서는 간단함을 위해 사용하지 않는다. 
 
 
-```rust
+```python
 output_dim = vocab_size
 batch_size = len(x_data)
 hidden_dim = 6
@@ -45,7 +45,7 @@ train_mode = True
 * embedding_dim은 각 단어를 몇 차원 vector로 mapping할지 결정하는 변수.
 * 나머지 3개 변수(state_tuple_mode,init_state_flag,train_mode)는 코드 상의 옵션을 설정하는 변수로 중요한 것은 아님. 차차 설명.
 
-```rust
+```python
 cells = []
 for _ in range(num_layers):
 	cell = tf.contrib.rnn.BasicLSTMCell(num_units=hidden_dim,state_is_tuple=state_tuple_mode)
@@ -56,7 +56,7 @@ cell = tf.contrib.rnn.MultiRNNCell(cells)
 * BasicLSTMCell의 state_is_tuple항목은 c_state와 h_state(m_state라고 하기도 함)를 tuple형태로 관리할 지, 그냥 이어서 하나로 관리할 지 정하는 항목인데, model구조에 영향을 주는 것은 아니다.
 * Tensorflow에서는 tuple로 관리할 것을 권장하고 있다.
 
-```rust
+```python
 init = tf.contrib.layers.xavier_initializer()
 embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initializer=init,dtype = tf.float32)
 inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
@@ -65,7 +65,7 @@ inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x 
 * 각 단어를 embedding할 수 있는 변수를 만든다. vocab_size x embedding_dim만큼의 변수가 필요하다.
 * embedding변수가 만들어지면, embedding_lookup을 통해, x_data를 embedding vector로 변환한다.
 * 참고로 embedding vector를 만들때 초기값을 아래와 같이 0,1,2,...로 지정하여 embedding vector로 변환이 어떻게 이루어지는지 확인해 볼 수도 있다.
-```rust
+```python
 init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 아래 embedding의 get_variable에서 shape을 지정하면 안된다.
 embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 
@@ -89,7 +89,7 @@ embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 ---
 ### Full CODE
 
-```rust
+```python
 # -*- coding: utf-8 -*-
 
 import numpy as np
