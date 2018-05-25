@@ -72,13 +72,12 @@ embedding = tf.get_variable("embedding", initializer=init,dtype = tf.float32)
 ```
 
 ---
----
 * 이제 RNN cell의 hidden state의 초기값을 지정하는 코드를 살펴보자.
 ```python
 if init_state_flag==0:
     initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
 else:
-    h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적정한 값을 외부에서 받아와야 함.
+    h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적절한 값을 외부에서 받아와야 함.
         initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
     else:
         initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
@@ -92,12 +91,32 @@ else:
 * LSTM cell에서는 c_state와 h_state가 있기 때문에 각각의 값을 지정해야함.
 * 우리는 LSTM cell을 multi로 쌓았기 때문에, 제일 아래 층만 지정된 값을 주고, 나머지 층은 0으로 초기화.
 * 제일 아래층에서도 c_state는 0으로 초기화하고, h_state는 h0값으로 초기화 했다.
+---
+* helper부분을 살펴보자.
+```python
+if train_mode:
+    helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size))
+else:
+    helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(embedding, start_tokens=tf.tile([SOS_token], [batch_size]), end_token=EOS_token)
+```
+* helper는 input data를 cell에 전달하는 역할을 하는데, training 모드에서는 TrainingHelper를 사용하고, inference 모드에서는 GreedyEmbeddingHelper가 사용된다.
+* GreedyEmbeddingHelper는 이전 단계의 output의 argmax에 해당하는 값을 다음 단계의 input으로 전달한다.
+* GreedyEmbeddingHelper는 batch개수 만큼의 SOS_token과 EOS_token이 parameter로 넘어간다. EOS_token이 생성될 때까지 RNN 모델이 돌아간다. EOS_token이 생성되지 않으면 무한 루프에 빠질 수 있다.
+* 무한 루프에 빠지는 것을 방지하기 위해 아래의 tf.contrib.seq2seq.dynamic_decode에서 maximum_iterations을 지정해 주는 것이 좋다.
+---
+* 이제 모델이 마지막 부분인 BasicDecoder, dynamic_decode를 살펴보자.
+```python
+output_layer = Dense(output_dim, name='output_projection')
+decoder = tf.contrib.seq2seq.BasicDecoder(cell=cell,helper=helper,initial_state=initial_state,output_layer=output_layer)    
+outputs, last_state, last_sequence_lengths = tf.contrib.seq2seq.dynamic_decode(decoder=decoder,output_time_major=False,impute_finished=True,maximum_iterations=10)
 
-
-
-
-
-
+```
+* output_layer는 RNN cell의 출력값을 받아 연결할 Full Connected Layer를 지정해 준다. output dimenstion만 정해주면 된다.
+* 지금까지의 만든 cell, helper, initial_state, output_layer를 BasicDecoder에 전달하여 decoder를 만들고, 이 decoder를 전달하여 최종적으로 dynamic_decode를 만든다.
+---
+* 이후의 코드는 Neural Net 모형을 아는 사람은 어렵지 않게 이해할 수 있기 때문에 추가적인 설명은 생략한다.
+* 또한, tf.contrib.seq2seq.sequence_loss에서 계산해 주는 loss값과 cross entropy loss를 직접 계산한 값이 일치하는지도 확인하고 있다.
+* 기타 여러가지 확인할 부분을 출력하는 코드가 추가되어 있다.
 
 
 
@@ -163,7 +182,7 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     if init_state_flag==0:
          initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
     else:
-        h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적정한 값을 외부에서 받아와야 함.
+        h0 = tf.random_normal([batch_size,hidden_dim]) #실제에서는 적절한 값을 외부에서 받아와야 함.
         if state_tuple_mode: 
             initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)          
         else:
