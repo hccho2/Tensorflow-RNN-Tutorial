@@ -86,6 +86,7 @@ else:
 * hidden state의 초기값은 cell.zero_state(batch_size, tf.float32)와 같이 0으로 지정하는 경우도 있고,
 * encoder-decoder 모델에서의 decoder의 hidden state 초기값은 encoder의 마지막 hidden state값을 받아오기도 한다.
 * image에 caption을 생성하는 모델에서는 image의 추상화된 feature를 초기값으로 사용할 수도 있다.
+* 또한 simple한 Attention 모델에서는 attention vector를 hidden state 초기값으로 전달하기도 한다.
 * 우리의 경우, init_state_flag==0인 경우는 0으로 초기화 했고,
 * init_state_flag가 0이 아니면, 밖에서 받아온 값으로 초기화해야 하는데, 예를 위해서 h0 = tf.random_normal([batch_size,hidden_dim])를 사용했다.
 * LSTM cell에서는 c_state와 h_state가 있기 때문에 각각의 값을 지정해야함.
