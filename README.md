@@ -10,7 +10,7 @@
  * GreedyEmbeddingHelper는 inference에 사용하는 hleper로 전단계의 output의 argmax에 해당하는 결과를 다음 단계의 input으로 전달된다.
  
 ### [code 설명]
- * 전체 코드는 RNN-TF-dynamic-decode.py에 있고, 이 페이지의 [아래](#main-code)에서도 확인할 수 있다.
+ * 전체 코드는 RNN-TF-dynamic-decode.py에 있고, 이 페이지의 [아래](#full-code)에서도 확인할 수 있다.
  * 이제 코드의 시작부터 잘라서 설명해 보자.
 ```rust
 vocab_size = 5
@@ -21,7 +21,7 @@ x_data = np.array([[SOS_token, 2, 1, 2, 3, 2],[SOS_token, 3, 1, 2, 3, 1],[SOS_to
 y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_token]],dtype=np.int32)
 ```
  * 간단한 data로 설명하기 위해, 단어 개수 vocab_size = 5로 설정. 제시된 x_data, y_data를 보면 알 수 있듯이, x_data는 SOS_token으로 시작하고, y_data는 EOS_token으로 끝난다.
- * seq_length는 6이다. batch data들의 길이가 같지 않은 경우가 대부분인데, 이를 경우에는 Null을 도입하여 최대 길이(max_sequence)를 정하고, 뒷부분을 Null로 채워서 길이를 맞춘다.
+ * seq_length는 6이다. batch data들의 길이가 같지 않은 경우가 대부분인데, 이를 경우에는 Null을 도입하여 최대 길이(max_sequence)를 정하고, 뒷부분을 Null로 채워서 길이를 맞춘다. 여기서는 Null을 사용하지 않았다.
  * 실전 data에서는 data file을 읽어, 단어를 숫자로 mapping하고 Null로 padding하는 등의 preprocessing에 많은 시간이 소요될 수 있다.
  * Tensorflow의 data 입력 op인 placeholder를 사용해야하는데, 여기서는 간단함을 위해 사용하지 않는다. 
 
@@ -43,11 +43,41 @@ train_mode = True
 * hidden_dim은 말 그대로 RNN cell의 hidden layer size.
 * num_layer는 Multi RNN모델에서 RNN layer를 몇 층으로 쌓을지 결정하는 값. 예를 들어, num_layer만큼 LSTM cell을 쌓는다.
 * embedding_dim은 각 단어를 몇 차원 vector로 mapping할지 결정하는 변수.
-* 나머지 3개 변수(state_tuple_mode,init_state_flag,train_mode)는 코드 상의 옵션을 설정하는 변수로 중요한 것은 아님. 차차 설명함.
+* 나머지 3개 변수(state_tuple_mode,init_state_flag,train_mode)는 코드 상의 옵션을 설정하는 변수로 중요한 것은 아님. 차차 설명.
+
+```rust
+cells = []
+for _ in range(num_layers):
+	cell = tf.contrib.rnn.BasicLSTMCell(num_units=hidden_dim,state_is_tuple=state_tuple_mode)
+	cells.append(cell)
+cell = tf.contrib.rnn.MultiRNNCell(cells)    
+```
+* RNN cell을 num_layer만큼 쌓아야하기 때문에 for loop를 통해서 BasicLSTMCell을 원하는 만큼 쌓았다.
+* BasicLSTMCell의 state_is_tuple항목은 c_state와 h_state(m_state라고 하기도 함)를 tuple형태로 관리할 지, 그냥 이어서 하나로 관리할 지 정하는 항목인데, model구조에 영향을 주는 것은 아니다.
+* Tensorflow에서는 tuple로 관리할 것을 권장하고 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ---
-### main code
+### Full CODE
 
 ```rust
 # -*- coding: utf-8 -*-
@@ -80,9 +110,6 @@ init_state_flag = 0
 train_mode = True
 
 
-#init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 이경우는 아래의 embedding의 get_variable에서 shape을 지정하면 안된다.
-init = tf.contrib.layers.xavier_initializer()
-
 
 with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     # Make rnn
@@ -94,6 +121,10 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     cell = tf.contrib.rnn.MultiRNNCell(cells)    
     #cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_dim)
 
+	
+	#init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 이경우는 아래의 embedding의 get_variable에서 shape을 지정하면 안된다.
+	init = tf.contrib.layers.xavier_initializer()
+	
     embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initializer=init,dtype = tf.float32)
     inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
 
