@@ -105,7 +105,7 @@ else:
 * GreedyEmbeddingHelper는 batch개수 만큼의 SOS_token과 EOS_token이 parameter로 넘어간다. EOS_token이 생성될 때까지 RNN 모델이 돌아간다. EOS_token이 생성되지 않으면 무한 루프에 빠질 수 있다.
 * 무한 루프에 빠지는 것을 방지하기 위해 아래의 tf.contrib.seq2seq.dynamic_decode에서 maximum_iterations을 지정해 주는 것이 좋다.
 ---
-* 이제 모델이 마지막 부분인 BasicDecoder, dynamic_decode를 살펴보자.
+* 이제 모델의 마지막 부분인 BasicDecoder, dynamic_decode를 살펴보자.
 ```python
 output_layer = Dense(output_dim, name='output_projection')
 decoder = tf.contrib.seq2seq.BasicDecoder(cell=cell,helper=helper,initial_state=initial_state,output_layer=output_layer)    
