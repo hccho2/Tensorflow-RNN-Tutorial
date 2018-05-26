@@ -18,7 +18,7 @@ SOS_token = 0
 EOS_token = 4
 
 x_data = np.array([[SOS_token, 2, 1, 2, 3, 2],[SOS_token, 3, 1, 2, 3, 1],[SOS_token, 1, 3, 2, 2, 1]], dtype=np.int32)
-y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_token]],dtype=np.int32)
+y_data = np.array([[2, 1, 2, 3, 2,EOS_token],[3, 1, 2, 3, 1,EOS_token],[ 1, 3, 2, 2, 1,EOS_token]],dtype=np.int32)
 ```
  * 간단한 data로 설명하기 위해, 단어 개수 vocab_size = 5로 설정. 제시된 x_data, y_data를 보면 알 수 있듯이, x_data는 SOS_token으로 시작하고, y_data는 EOS_token으로 끝난다.
  * seq_length는 6이다. batch data들의 길이가 같지 않은 경우가 대부분인데, 이런 경우에는 Null을 도입하여 최대 길이(max_sequence)를 정하고, 뒷부분을 Null로 채워서 길이를 맞춘다. 여기서는 Null을 사용하지 않았다.
@@ -146,7 +146,7 @@ SOS_token = 0
 EOS_token = 4
 
 x_data = np.array([[SOS_token, 2, 1, 2, 3, 2],[SOS_token, 3, 1, 2, 3, 1],[SOS_token, 1, 3, 2, 2, 1]], dtype=np.int32)
-y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_token]],dtype=np.int32)
+y_data = np.array([[2, 1, 2, 3, 2,EOS_token],[3, 1, 2, 3, 1,EOS_token],[ 1, 3, 2, 2, 1,EOS_token]],dtype=np.int32)
 print("data shape: ", x_data.shape)
 
 
