@@ -101,6 +101,8 @@ else:
     helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(embedding, start_tokens=tf.tile([SOS_token], [batch_size]), end_token=EOS_token)
 ```
 * helper는 input data를 cell에 전달하는 역할을 하는데, training 모드에서는 TrainingHelper를 사용하고, inference 모드에서는 GreedyEmbeddingHelper가 사용된다.
+* TrainingHelper의 2번째 argument로 배치의 seq_length를 정해줘야 하는데, 우리는 (필요한 경우 Null을 붙혀) batch속에 있는 각각의 data 길이가 동일(지금의 예에서는 6)하게 만들어 놓았기 때문에, [seq_length]*batch_size로 하면 된다.
+* Null을 붙혀 data길이를 맞추었다면, 나중에 loss계산할 때, Null이 붙은 부분의 weight는 0으로 줘서 무시될 수 있도록 하면 된다.
 * GreedyEmbeddingHelper는 이전 단계의 output의 argmax에 해당하는 값을 다음 단계의 input으로 전달한다.
 * GreedyEmbeddingHelper는 batch개수 만큼의 SOS_token과 EOS_token이 parameter로 넘어간다. EOS_token이 생성될 때까지 RNN 모델이 돌아간다. EOS_token이 생성되지 않으면 무한 루프에 빠질 수 있다.
 * 무한 루프에 빠지는 것을 방지하기 위해 아래의 tf.contrib.seq2seq.dynamic_decode에서 maximum_iterations을 지정해 주는 것이 좋다.
