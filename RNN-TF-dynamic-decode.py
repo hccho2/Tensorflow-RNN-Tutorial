@@ -12,13 +12,13 @@ SOS_token = 0
 EOS_token = 4
 
 x_data = np.array([[SOS_token, 2, 1, 2, 3, 2],[SOS_token, 3, 1, 2, 3, 1],[SOS_token, 1, 3, 2, 2, 1]], dtype=np.int32)
-y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_token]],dtype=np.int32)
+y_data = np.array([[2, 1, 2, 3, 2,EOS_token],[3, 1, 2, 3, 1,EOS_token],[ 1, 3, 2, 2, 1,EOS_token]],dtype=np.int32)
 print("data shape: ", x_data.shape)
 
 
 output_dim = vocab_size
 batch_size = len(x_data)
-hidden_dim = 6
+hidden_dim =6
 num_layers = 2
 seq_length = x_data.shape[1]
 embedding_dim = 8
@@ -39,8 +39,6 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     cell = tf.contrib.rnn.MultiRNNCell(cells)    
     #cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_dim)
 
-    #init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1).astype(np.float32) # 이경우는 아래의 embedding의 get_variable에서 shape을 지정하면 안된다.
-    init = tf.contrib.layers.xavier_initializer()
     embedding = tf.get_variable("embedding",shape=[vocab_size,embedding_dim], initializer=init,dtype = tf.float32)
     inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
 
@@ -49,10 +47,12 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     if init_state_flag==0:
          initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
     else:
-        h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
-        if state_tuple_mode: 
-            initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)          
+        if state_tuple_mode:
+            h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
+            initial_state=(tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), h0),) + (tf.contrib.rnn.LSTMStateTuple(tf.zeros_like(h0), tf.zeros_like(h0)),)*(num_layers-1)
+            
         else:
+            h0 = tf.random_normal([batch_size,hidden_dim]) #h0 = tf.cast(np.random.randn(batch_size,hidden_dim),tf.float32)
             initial_state = (tf.concat((tf.zeros_like(h0),h0), axis=1),) + (tf.concat((tf.zeros_like(h0),tf.zeros_like(h0)), axis=1),) * (num_layers-1)
     if train_mode:
         helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size))
@@ -67,6 +67,7 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
     
     Y = tf.convert_to_tensor(y_data)
     weights = tf.ones(shape=[batch_size,seq_length])
+
     loss =   tf.contrib.seq2seq.sequence_loss(logits=outputs.rnn_output, targets=Y, weights=weights)
 
     optimizer = tf.train.AdamOptimizer(learning_rate=0.01)
@@ -100,4 +101,3 @@ with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
         
         print("kernel(weight)",sess.run(output_layer.trainable_weights[0]))  # kernel(weight)
         print("bias",sess.run(output_layer.trainable_weights[1]))  # bias
-    
