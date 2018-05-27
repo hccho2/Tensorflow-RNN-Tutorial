@@ -121,7 +121,18 @@ outputs, last_state, last_sequence_lengths = tf.contrib.seq2seq.dynamic_decode(d
 * 또한, tf.contrib.seq2seq.sequence_loss에서 계산해 주는 loss값과 cross entropy loss를 직접 계산한 값이 일치하는지도 확인하고 있다.
 * tf.contrib.seq2seq.sequence_loss의 targets은 one-hot으로 변환되지 않은 값이 전달된다.
 * 기타 여러가지 확인할 부분을 출력하는 코드가 추가되어 있다.
-
+---
+[추가 설명]
+* loss를 계산하는 부분에 대한 설명:
+```python
+weights = tf.ones(shape=[batch_size,seq_length])
+loss =   tf.contrib.seq2seq.sequence_loss(logits=outputs.rnn_output, targets=Y, weights=weights)
+```
+* 우리는 Null을 사용하지 않았기 때문에 모든 batch data의 sequence에 대해서 동일한 가중치 1을 부여했다.
+* Null을 사용했다면, Null이 들어가는 부분의 loss가 무시될 수 있도록 weights를 만들어 준다.
+```python
+weights = tf.to_float(tf.not_equal(y_data, Null))
+```
 
 
 
