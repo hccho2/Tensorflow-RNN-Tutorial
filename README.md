@@ -114,7 +114,7 @@ decoder = tf.contrib.seq2seq.BasicDecoder(cell=cell,helper=helper,initial_state=
 outputs, last_state, last_sequence_lengths = tf.contrib.seq2seq.dynamic_decode(decoder=decoder,output_time_major=False,impute_finished=True,maximum_iterations=10)
 
 ```
-* output_layer는 RNN cell의 출력값을 받아 연결할 Full Connected Layer를 지정해 준다. output dimenstion만 정해주면 된다.
+* output_layer는 RNN cell의 출력값을 받아 연결할 Full Connected Layer를 지정해 준다. output dimension만 정해주면 된다.
 * 지금까지의 만든 cell, helper, initial_state, output_layer를 BasicDecoder에 전달하여 decoder를 만들고, 이 decoder를 전달하여 최종적으로 dynamic_decode를 만든다.
 ---
 * 이후의 코드는 Neural Net 모형을 아는 사람은 어렵지 않게 이해할 수 있기 때문에 추가적인 설명은 생략한다.
