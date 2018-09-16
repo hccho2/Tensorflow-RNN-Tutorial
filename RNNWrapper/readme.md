@@ -147,5 +147,45 @@ last state:  Tensor("test/decoder/while/Exit_3:0", shape=(3, 2), dtype=float32)
 ```
 
 ### [이제 BasicRNNCell을 직접 만들어보자]
+* BasicRNNCell은 input과 이전 state를 concat하여 kernel을 곱한 후, bias를 더하고 tanh를 취하는 구조이다.
+* 이런 구조의 RNNCell을 만들기 위해서는 kernel과 bias를 정의해야 하고, call method에서 필요한 연산을 해 주면 된다.
+* kernel과 bias의 정의는 build(self, inputs_shape)라는 특수한 형태의 함수에서 해주면 된다.
+```python
+class MyBasicRNNWrapper(RNNCell):
+    # property(output_size, state_size) 2개와 call을 정의하면 된다.
+    def __init__(self,state_dim,name=None):
+        super(MyBasicRNNWrapper, self).__init__(name=name)
+        self.sate_size = state_dim
+
+    @property
+    def output_size(self):
+        return self.sate_size  
+
+    @property
+    def state_size(self):
+        return self.sate_size  
+
+    def build(self, inputs_shape):
+        # 필요한 trainable variable이 있으면 여기서 생성하고, self.built = True로 설정하면 된다.
+        # 이곳을 잘 정의하면 BasicRNNCell, GRUCell, BasicLSTMCell같은 것을 만들 수 있다.
+        # 여기서 선언한 Variable들을 아래의 call에서 input, state와 엮어서 필요한 계산을 하면된다.
+        # BasicRNNCell, GRUCell 소스 코드를 보면 그렇데 되어 있다.
+        
+        # helper에서 필요한 정보를 받아서 inputs_shape를 받아오는 것이다.
+        input_depth = inputs_shape[1].value
+        self._kernel = tf.get_variable('kernel', shape=[input_depth + self.sate_size, self.sate_size])
+        self._bias = tf.get_variable('bias', shape=[self.sate_size],  initializer=tf.zeros_initializer(dtype=tf.float32))
+    
+        self.built = True
+
+    def call(self, inputs, state):
+        # 이 call 함수를 통해 cell과 cell이 연결된다.
+        gate_inputs = tf.matmul(tf.concat((inputs,state),axis=1),self._kernel)
+        gate_inputs = tf.nn.bias_add(gate_inputs,self._bias)
+        cell_output = tf.tanh(gate_inputs)
+        next_state = cell_output
+        return cell_output, next_state 
+
+```
 
 
