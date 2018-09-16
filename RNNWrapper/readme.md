@@ -149,7 +149,7 @@ last state:  Tensor("test/decoder/while/Exit_3:0", shape=(3, 2), dtype=float32)
 ```
 
 ### [이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자]
-* 이제, 조금 더 의미 있는 user defined RNN Wrapper class를 만들어 보자. Tensorflow에 이미 구현되어 있는 BasicRnnCell을 직접 구현해 보자.
+* 이제, 조금 더 의미 있는 user defined RNN Wrapper class를 만들어 보자. Tensorflow에 이미 구현되어 있는 tf.contrib.rnn.BasicRNNCell을 직접 구현해 보자.
 * BasicRNNCell은 input과 이전 state를 concat하여 kernel을 곱한 후, bias를 더하고 tanh를 취하는 구조이다.
 * 이런 구조의 RNNCell을 만들기 위해서는 kernel과 bias를 정의해야 하고, call method에서 필요한 연산을 해 주면 된다.
 * kernel과 bias의 정의는 build(self, inputs_shape)라는 특수한 형태의 함수에서 해주면 된다.
