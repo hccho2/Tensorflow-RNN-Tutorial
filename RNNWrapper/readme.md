@@ -6,9 +6,9 @@
 BasicDecoder, dynamic_decode를 잘 모르는 경우에는 이전 post인 [RNN-Tutorial](https://github.com/hccho2/RNN-Tutorial)를 참고하면 된다.
 ![decode](./dynamic-rnn-decode2.png)
 * Tensorflow의 dynamic_decode는 BasicDecoder를 입력받고, BasicDecoder는 cell, Helper 등을 입력받아 RNN모델이 구현된다.
-* 이 post에서는 ueer defined RNNCell 구현에 대해서 알아보고자 한다.
+* 이 post에서는 user defined RNNCell 구현에 대해서 알아보고자 한다.
 * 먼저, cell의 대표적인 예로는 Tensorflow에 구현되어 있는 BasicRNNCell, GRUCell, BasicLSTMCell 등이 있다.
-* 이런 cell은 (Tensorflow의 )RNNCell을 상속받은 class들이다.
+* 이런 cell들은 (Tensorflow의) RNNCell을 상속받은 class들이다.
 * RNNCell을 상속받아 사용자 정의 RNN Wrapper class를 만들어  BasicDecoder로 넘겨줄 수 있다.
 * 이제, 초간단으로 만들어진 RNN Wrapper의 sample code를 살펴보자.
 
