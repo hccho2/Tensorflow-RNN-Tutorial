@@ -193,7 +193,7 @@ hidden_dim = 4
 cell = MyBasicRNNWrapper(hidden_dim,"xxx")
 ```
 
-[p.s.]
+### [p.s.]
 * 지금까지 tensorflow의 seq2seq 모델에서 BasicDecoder에 넘겨 줄 수 있는 user defined RNN Wrapper을 구현해 보았다.
 * RNN Wrapper를 구현하게 된 것은 Tacotron모델을 공부하는 과정에서 Bahdanau Attention을 변형하여 user defined Attention, user defined Helper 등을 공부했는데, 
 * 이러한 것을 이해하기 위해서는 먼저 Wrapper Class를 잘 이해할 필요가 있기 때문에, user defined Wrapper Class 만들기를 정리해 보았다.
