@@ -36,3 +36,11 @@ class MyRnnWrapper(RNNCell):
 * call 함수(method)는 input과 직전 cell에서 넘겨 받은 hidden state값을 넘겨 받아, 필요한 계산을 수행한 후, 다음 단계로 넘겨 줄 next_state와 cell_output를 구하는 역할을 수행한다.
 
 ![decode](./cell-cell.png)
+* 위 sample code은 넘겨받은 input을 그대로 output으로 내보내고, 넘겨 받은 state로 가공없이 next_state로 넘겨주는 의미 없는 example이다.
+* 지금까지 만든 MyRnnWrapper를 dynamic_decode로 넘겨 돌려볼 수 있는 간단한 예를 만들어 돌려보자.
+
+
+
+
+
+
