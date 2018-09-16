@@ -2,7 +2,7 @@
 
 ### [쉬운 것부터 시작해보자]
 
-아래 그림은 tf.nn.dynamic_rnn과 tf.contrib.seq2seq.dynamic_decode의 입력 구조를 비교한 그림이다.
+아래 그림은 tf.contrib.seq2seq.BasicDecoder(class)와 tf.contrib.seq2seq.dynamic_decode(함수)의 입력 구조를 비교한 그림이다.
 BasicDecoder, dynamin_decoder를 잘 모르는 경우은 이건 post인 [RNN-Tutorial](https://github.com/hccho2/RNN-Tutorial)를 참고하면 된다.
 ![decode](./dynamic-rnn-decode2.png)
 * Tensorflow의 dynamin_decoder는 BasicDecoder를 입력받고, BasicDecoder는 cell, Helper 등을 입력받아 RNN모델이 구현된다.
