@@ -146,7 +146,7 @@ last state:  Tensor("test/decoder/while/Exit_3:0", shape=(3, 2), dtype=float32)
 """    
 ```
 
-### [이제 BasicRNNCell을 직접 만들어보자]
+### [이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자]
 * BasicRNNCell은 input과 이전 state를 concat하여 kernel을 곱한 후, bias를 더하고 tanh를 취하는 구조이다.
 * 이런 구조의 RNNCell을 만들기 위해서는 kernel과 bias를 정의해야 하고, call method에서 필요한 연산을 해 주면 된다.
 * kernel과 bias의 정의는 build(self, inputs_shape)라는 특수한 형태의 함수에서 해주면 된다.
@@ -167,16 +167,11 @@ class MyBasicRNNWrapper(RNNCell):
 
     def build(self, inputs_shape):
         # 필요한 trainable variable이 있으면 여기서 생성하고, self.built = True로 설정하면 된다.
-        # 이곳을 잘 정의하면 BasicRNNCell, GRUCell, BasicLSTMCell같은 것을 만들 수 있다.
-        # 여기서 선언한 Variable들을 아래의 call에서 input, state와 엮어서 필요한 계산을 하면된다.
-        # BasicRNNCell, GRUCell 소스 코드를 보면 그렇데 되어 있다.
-        
-        # helper에서 필요한 정보를 받아서 inputs_shape를 받아오는 것이다.
         input_depth = inputs_shape[1].value
         self._kernel = tf.get_variable('kernel', shape=[input_depth + self.sate_size, self.sate_size])
         self._bias = tf.get_variable('bias', shape=[self.sate_size],  initializer=tf.zeros_initializer(dtype=tf.float32))
     
-        self.built = True
+        self.built = True  # 필요한 변수가 선언되었다는 것을 super에게 알려주는 역할.
 
     def call(self, inputs, state):
         # 이 call 함수를 통해 cell과 cell이 연결된다.
@@ -187,5 +182,8 @@ class MyBasicRNNWrapper(RNNCell):
         return cell_output, next_state 
 
 ```
-
-
+* 위와 같이 MyBasicRNNWrapper를 만들고 나면 MyRnnWrapper를 test했던 코드에서 Wrapper Class만 바꾸어서 test하면 된다.
+```python
+#cell = MyRnnWrapper(embedding_dim,"xxx")
+cell = MyBasicRNNWrapper(embedding_dim,"xxx")
+```
