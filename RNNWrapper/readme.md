@@ -188,8 +188,9 @@ class MyBasicRNNWrapper(RNNCell):
 ```
 * 위와 같이 MyBasicRNNWrapper를 만들고 나면 MyRnnWrapper를 test했던 코드에서 Wrapper Class만 바꾸어서 test하면 된다.
 ```python
+hidden_dim = 4
 #cell = MyRnnWrapper(embedding_dim,"xxx")
-cell = MyBasicRNNWrapper(embedding_dim,"xxx")
+cell = MyBasicRNNWrapper(hidden_dim,"xxx")
 ```
 
 [p.s.]
