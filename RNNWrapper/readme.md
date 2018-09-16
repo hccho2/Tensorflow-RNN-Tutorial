@@ -10,7 +10,7 @@ BasicDecoder, dynamic_decode를 잘 모르는 경우에는 이전 post인 [RNN-T
 * 먼저, cell의 대표적인 예로는 Tensorflow에 구현되어 있는 BasicRNNCell, GRUCell, BasicLSTMCell 등이 있다.
 * 이런 cell들은 (Tensorflow의) RNNCell을 상속받은 class들이다.
 * RNNCell을 상속받아 사용자 정의 RNN Wrapper class를 만들어  BasicDecoder로 넘겨줄 수 있다.
-* 이제, 초간단으로 만들어진 RNN Wrapper의 sample code를 살펴보자.
+* 이제, 초간단으로 만들어진 user defined RNN Wrapper의 sample code를 살펴보자.
 
 ```python
 from tensorflow.contrib.rnn import RNNCell
@@ -35,8 +35,8 @@ class MyRnnWrapper(RNNCell):
         next_state = state + 0.1
         return cell_output, next_state 
 ```
-* 위 코드에서 볼 수 있듯이, RNNCell을 상속받아 class MyRnnWrapper 정의한다.
-* MyRnnWrapper에서 반드시 구현하여야 하는 부분은 perperty output_size와 state_size 이다. 그리고 call이라 이름 붙혀진 class method를 구현해야 한다.
+* 위 코드는, RNNCell을 상속받아 class MyRnnWrapper 구현하고 있다.
+* MyRnnWrapper에서 반드시 구현하여야 하는 부분은 perperty output_size와 state_size 이다. 그리고 call(self, inputs, state)이라는 특수한 class method를 구현해야 한다.
 * output_size는 RNN Model에서 출력될 결과물의 dimension이고 state_size는 cell과 cell를 연결하는 hidden state의 크기이다. 
 * call 함수(method)는 input과 직전 cell에서 넘겨 받은 hidden state값을 넘겨 받아, 필요한 계산을 수행한 후, 다음 단계로 넘겨 줄 next_state와 cell_output를 구하는 역할을 수행한다.
 
