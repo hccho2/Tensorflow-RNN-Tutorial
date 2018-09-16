@@ -1,4 +1,7 @@
 # Tensorflow에서 BasicDecoder에 넘겨 줄 수 있는 사용자 정의 RNN Wrapper Class를 만들어 보자.
+
+### [쉬운 것부터 시작해보자]
+
 아래 그림은 tf.nn.dynamic_rnn과 tf.contrib.seq2seq.dynamic_decode의 입력 구조를 비교한 그림이다.
 
 ![decode](./dynamic-rnn-decode2.png)
@@ -143,6 +146,6 @@ last state:  Tensor("test/decoder/while/Exit_3:0", shape=(3, 2), dtype=float32)
 """    
 ```
 
-
+### [이제 BasicRNNCell을 직접 만들어보자]
 
 
