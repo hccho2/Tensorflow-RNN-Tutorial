@@ -42,7 +42,7 @@ class MyRnnWrapper(RNNCell):
 
 ![decode](./cell-cell.png)
 * 위 sample code은 넘겨받은 input을 그대로 output으로 내보내고, 넘겨 받은 state는 test 삼아, 0.1을 더해 next_state로 넘겨주는 의미 없는 example이다.
-* 지금까지 만든 MyRnnWrapper를 dynamic_decode로 넘겨 돌려볼 수 있는 간단한 예를 만들어 돌려보자.
+* 지금까지 만든 MyRnnWrapper를 dynamic_decode로 넘겨 돌려볼 수 있는 간단한 예를 만들어 돌려보자. 아래 코드가 이해되지 않는다면 위에서 언급한 [RNN-Tutorial](https://github.com/hccho2/RNN-Tutorial)를 참고하면 된다.
 
 ```python
 # coding: utf-8
