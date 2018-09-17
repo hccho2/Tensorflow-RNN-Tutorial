@@ -194,7 +194,7 @@ cell = MyBasicRNNWrapper(hidden_dim,"xxx")
 ```
 
 ### [원하는 구조로 RNN Cell을 설계할 수 있다]
-* 입력 값이 input이 들어오면, FC layer를 한번 거친 후, state와 결합하여 연산하는 구조를 원한다면, call method를 수정해주면 된다.
+* 입력 값인 input이 들어오면, FC layer를 한번 거친 후, state와 결합하여 연산하는 구조를 원한다면, call method를 수정해주면 된다.
 ```python
 def call(self, inputs, state):
 	# 이 call 함수를 통해 cell과 cell이 연결된다.
