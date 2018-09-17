@@ -193,6 +193,21 @@ hidden_dim = 4
 cell = MyBasicRNNWrapper(hidden_dim,"xxx")
 ```
 
+### [원하는 구조로 RNN Cell을 설계할 수 있다]
+* 입력 값이 input이 들어오면, FC layer를 한번 거친 후, state와 결합하여 연산하는 구조를 원한다면, call method를 수정해주면 된다.
+```python
+def call(self, inputs, state):
+	# 이 call 함수를 통해 cell과 cell이 연결된다.
+	inputs = tf.layers.dense(inputs,units=self.input_depth,kernel_initializer = tf.contrib.layers.xavier_initializer(False), activation=tf.nn.relu)
+	gate_inputs = tf.matmul(tf.concat((inputs,state),axis=1),self._kernel)
+	gate_inputs = tf.nn.bias_add(gate_inputs,self._bias)
+	cell_output = tf.tanh(gate_inputs)
+	next_state = cell_output
+	return cell_output, next_state 
+```
+* 출력값 cell_output을 FC layer를 한 번 거친 후, 내보내고 싶다면, 약간만 수정해 준다면 어렵지 않다.
+* 이런 식으로 원하는 구조로 얼마든지 변형이 가능하기 때문에, 원하는 모델을 만드는 것이 가능하다.
+
 ### [p.s.]
 * 지금까지 tensorflow의 seq2seq 모델에서 BasicDecoder에 넘겨 줄 수 있는 user defined RNN Wrapper을 구현해 보았다.
 * RNN Wrapper를 구현하게 된 것은 Tacotron모델을 공부하는 과정에서 Bahdanau Attention을 변형하여 user defined Attention, user defined Helper 등을 공부했는데, 
