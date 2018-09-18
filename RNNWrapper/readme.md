@@ -1,7 +1,7 @@
 # Tensorflow에서 BasicDecoder에 넘겨 줄 수 있는 사용자 정의 RNN Wrapper Class를 만들어 보자.
 ###[목차]
-* [쉬운 것부터 시작해보자](*쉬운 것부터 시작해보자)
-* [이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자](*이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자)
+* [쉬운 것부터 시작해보자](*쉬운-것부터-시작해보자)
+* [이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자](*이제-Tensorflow에-있는-BasicRNNCell을-직접-만들어보자)
 
 ### [쉬운 것부터 시작해보자]
 
