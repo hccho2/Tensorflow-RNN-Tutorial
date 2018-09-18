@@ -3,7 +3,7 @@
 * [쉬운 것부터 시작해보자](#쉬운-것부터-시작해보자)
 * [BasicRNNCell을 직접 만들어보자](#basicrnncell을-직접-만들어보자)
 * [User Defined RNNCell](#user-defined-rnncell)
-* [진정한 Wrapper 만들기](#진정한wrapper-만들기)
+* [진정한 Wrapper 만들기](#진정한-wrapper-만들기)
 
 ### [쉬운 것부터 시작해보자]
 
