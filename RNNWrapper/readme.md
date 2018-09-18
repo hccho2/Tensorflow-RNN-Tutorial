@@ -3,6 +3,7 @@
 * [쉬운 것부터 시작해보자](#쉬운-것부터-시작해보자)
 * [BasicRNNCell을 직접 만들어보자](#basicrnncell을-직접-만들어보자)
 * [User Defined RNNCell](#user-defined-rnncell)
+* [진정한 Wrapper 만들기](#진정한wrapper-만들기)
 
 ### [쉬운 것부터 시작해보자]
 
@@ -211,6 +212,16 @@ def call(self, inputs, state):
 ```
 * 출력값 cell_output을 FC layer를 한 번 거친 후, 내보내고 싶다면, 약간만 수정해 준다면 어렵지 않다.
 * 이런 식으로 원하는 구조로 얼마든지 변형이 가능하기 때문에, 원하는 모델을 만드는 것이 가능하다.
+
+
+### [진정한 Wrapper 만들기]
+
+
+
+
+
+
+
 
 ### [p.s.]
 * 지금까지 tensorflow의 seq2seq 모델에서 BasicDecoder에 넘겨 줄 수 있는 user defined RNN Wrapper을 구현해 보았다.
