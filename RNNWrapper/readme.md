@@ -1,8 +1,8 @@
 # Tensorflow에서 BasicDecoder에 넘겨 줄 수 있는 사용자 정의 RNN Wrapper Class를 만들어 보자.
 ### [목차]
 * [쉬운 것부터 시작해보자](#쉬운-것부터-시작해보자)
-* [이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자](#이제-Tensorflow에)
-* [원하는 구조로 RNN Cell을 설계할 수 있다](#[원하는-구조로-RNN-Cell을-설계할-수-있다])
+* [BasicRNNCell을 직접 만들어보자](#BasicRNNCell을-직접-만들어보자)
+* [User Defined RNNCell](#user-defined-rnncell)
 
 ### [쉬운 것부터 시작해보자]
 
@@ -152,7 +152,7 @@ last state:  Tensor("test/decoder/while/Exit_3:0", shape=(3, 2), dtype=float32)
 """    
 ```
 
-### [이제 Tensorflow에 있는 BasicRNNCell을 직접 만들어보자]
+### [BasicRNNCell을 직접 만들어보자]
 * 이제, 조금 더 의미 있는 user defined RNN Wrapper class를 만들어 보자. Tensorflow에 이미 구현되어 있는 tf.contrib.rnn.BasicRNNCell을 직접 구현해 보자.
 ![decode](./math-basicRNN.png)
 * BasicRNNCell은 input과 이전 state를 concat하여 kernel을 곱한 후, bias를 더하고 tanh를 취하는 구조이다.
