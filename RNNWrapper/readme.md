@@ -215,7 +215,25 @@ def call(self, inputs, state):
 
 
 ### [진정한 Wrapper 만들기]
+* RNN Wrapper는 말 그대로 RNN Cell을 감싸는 WRAP이다. Tensorflow에 구현되어 있는 BasicRNNCell, GRUCell, BasicLSTMCell등을 감싸서 새로운 구조를 만드는 틀이 될 수 있다. 
+* 물론 내장되어 있는 RNN Cell뿐만 아니라, 우리가 여기서 다루고 있는 RNNWrapper를 다시 감싸는 RNNWrapper도 가능하다.
+```python
+class MyBasicRNNWrapper2(RNNCell):
+    # property(output_size, state_size) 2개와 call을 정의하면 된다.
+    def __init__(self,cell,name=None):
+        super(MyBasicRNNWrapper2, self).__init__(name=name)
+        self.cell = cell
+    @property
+    def output_size(self):
+        return self.cell.output_size  
+    @property
+    def state_size(self):
+        return self.cell.state_size  
 
+    def call(self, inputs, state):
+        cell_output, next_state = self.cell(inputs,state)
+        return cell_output, next_state 
+```
 
 
 
