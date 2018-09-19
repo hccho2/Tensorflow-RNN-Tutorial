@@ -243,9 +243,14 @@ cell = MyBasicRNNWrapper2(tf.contrib.rnn.BasicRNNCell(hidden_dim),"xxx")
 ```
 * 위 코드의 call함수에서는 입력값인 (inputs, state)를 self.cell에 그래도 넘겼지만, 
 * self.cell에 넘기기 전에 필요한 작업을 한 후 넘겨주고, 
-* 그리고 self.cell에서 return 받는 결과에 필요한 후처리(post processing)를 수행한 후 return 하면 된다.
-
-
+* 그리고 self.cell에서 return 받는 결과에 필요한 후 처리를 수행한 후 return 하면 된다.
+* 예를 들어, Residual 같은 구조로 입력과 결과값을 더해서 output으로 내보내고 싶다거나, output과 state를 concat해서 새로운 output을 만들거나 등등
+```python
+def call(self, inputs, state):
+	cell_output, next_state = self.cell(inputs,state)
+	cell_output = inputs + cell_output  # residual rnn
+	return cell_output, next_state 
+```
 ### [p.s.]
 * 지금까지 tensorflow의 seq2seq 모델에서 BasicDecoder에 넘겨 줄 수 있는 user defined RNN Wrapper을 구현해 보았다.
 * RNN Wrapper를 구현하게 된 것은 Tacotron모델을 공부하는 과정에서 Bahdanau Attention을 변형하여 user defined Attention, user defined Helper 등을 공부했는데, 
