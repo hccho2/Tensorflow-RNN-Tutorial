@@ -219,7 +219,8 @@ def call(self, inputs, state):
 * 물론 내장되어 있는 RNN Cell뿐만 아니라, 우리가 여기서 다루고 있는 RNNWrapper를 다시 감싸는 RNNWrapper도 가능하다.
 * RNNCell을 감싸기 위해서는 init함수에서 원하는 RNNCell을 받으면 된다.
 ![wrapper](./wrapper.png)
-
+* 위 그림에서 볼 수 있듯이, 입력이 들어오면, 먼저 Wrapper가 받은 후, 내부의 RNNCell에 전달되는 구조이다.
+* tf.contrib.seq2seq.AttentionWrapper같은 경우에 입력이 들어오면, attention과 concat하여 새로운 input을 만드는데, 이렇게 catcat된 input을 내부의 RNNCell에 전달한다.
 
 ```python
 class MyBasicRNNWrapper2(RNNCell):
