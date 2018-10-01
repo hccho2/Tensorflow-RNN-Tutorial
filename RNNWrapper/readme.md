@@ -236,7 +236,9 @@ class MyBasicRNNWrapper2(RNNCell):
         return self.cell.state_size  
 
     def call(self, inputs, state):
+        # 필요한 작업1: inputs, state를 이용하여 필요한 작업을 수행하여 self.cell에 넘겨줄 새로은 inputs, state를 만든다.
         cell_output, next_state = self.cell(inputs,state)
+	# 필요한 작업2: self.cell이 return한 cell_outpus, next_state를 가공하여 return 값을 만든다.
         return cell_output, next_state 
 
 hidden_dim = 4
