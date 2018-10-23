@@ -254,6 +254,16 @@ def call(self, inputs, state):
 	cell_output = inputs + cell_output  # residual rnn
 	return cell_output, next_state 
 ```
+
+* inputs를 FC layer에 넣은 후, cell에 넣어 줄 수도 있다. 이 때, 만들어지는 FC layer는 training이 된다. 
+```python
+def call(self, inputs, state):
+        fc_outputs = tf.dense(inputs,units=5)  # FC layer
+	cell_output, next_state = self.cell(fc_outputs,state)
+	cell_output = inputs + cell_output  # residual rnn
+	return cell_output, next_state 
+```
+
 ### [p.s.]
 * 지금까지 tensorflow의 seq2seq 모델에서 BasicDecoder에 넘겨 줄 수 있는 user defined RNN Wrapper을 구현해 보았다.
 * RNN Wrapper를 구현하게 된 것은 Tacotron모델을 공부하는 과정에서 Bahdanau Attention을 변형하여 user defined Attention, user defined Helper 등을 공부했는데, 
