@@ -258,7 +258,7 @@ def call(self, inputs, state):
 * inputs를 FC layer에 넣은 후, cell에 넣어 줄 수도 있다. 이 때, 만들어지는 FC layer는 training이 된다. 
 ```python
 def call(self, inputs, state):
-        fc_outputs = tf.dense(inputs,units=5)  # FC layer
+        fc_outputs = tf.layers.dense(inputs,units=5,name='myFC')  # FC layer
 	cell_output, next_state = self.cell(fc_outputs,state)
 	cell_output = inputs + cell_output  # residual rnn
 	return cell_output, next_state 
