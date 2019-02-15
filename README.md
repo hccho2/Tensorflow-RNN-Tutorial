@@ -13,7 +13,9 @@ Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 �
 - dynamic_decode
 
 #### 1. [User Defined RNNWrapper](https://github.com/hccho2/RNN-Tutorial/tree/master/1.%20RNNWrapper) 
-사용자 정의 RNN Wrapper를 만드는 방법에 대하여 알아본다.
+사용자 정의 RNN Wrapper를 만드는 방법에 대하여 알아본다. 
+- RNNCell을 상속받아 사용자 정의 RNN Wrapper class를 정의한다.
+- 여기서 만드는 RNN Wrapper는 BasicRNNCell을 대체할 수 있다.
 
 
 -------- 여기서 부터는 update 예정 -----------
