@@ -103,6 +103,8 @@ class TacoTestHelper(Helper):
         with tf.name_scope('TacoTestHelper'):
             finished = tf.reduce_all(tf.equal(outputs, self._end_token), axis=1)
             # Feed last output frame as next input. outputs is [N, output_dim * r]
-            next_inputs = outputs[:, -self._output_dim:]
+            next_inputs = outputs[:, -self._output_dim:]  #outputs: (batch_size, output_dim*r)에서 마지막 output_dim개만 return
             return (finished, next_inputs, state)
 ```
+
+* 함수 next_inputs에서 next_inputs를 계산하는 방식에만 주목하면 된다. output_dim*r 중에서 마지막 output_dim개만 return했다.
