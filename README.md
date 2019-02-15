@@ -8,4 +8,4 @@
 #### 0. [Basic RNN Model](https://github.com/hccho2/RNN-Tutorial/tree/master/0.%20Basic) 
 
 
-#### 1. [RNNWrapper](https://github.com/hccho2/RNN-Tutorial/tree/master/0.%20Basic) 
+#### 1. [RNNWrapper](https://github.com/hccho2/RNN-Tutorial/tree/master/1.%20RNNWrapper) 
