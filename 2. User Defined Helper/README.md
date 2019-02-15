@@ -71,4 +71,38 @@ class MyRnnHelper(Helper):
 ### [TacotronTestHelper 만들기]
 * Tacotron 모델에서 inference 단계에서 사용할 Helper를 만들어 보자. 
 
+```python
+class TacoTestHelper(Helper):
+    def __init__(self, batch_size, output_dim, r):
+        with tf.name_scope('TacoTestHelper'):
+            self._batch_size = batch_size
+            self._output_dim = output_dim
+            self._end_token = tf.tile([0.0], [output_dim * r])  # [0.0,0.0,...]
 
+    @property
+    def batch_size(self):
+        return self._batch_size
+    
+    @property
+    def sample_ids_dtype(self):
+        return tf.int32
+
+    @property
+    def sample_ids_shape(self):
+        return tf.TensorShape([])
+    
+    def initialize(self, name=None):
+        return (tf.tile([False], [self._batch_size]), tf.tile([[0.0]], [self._batch_size, self._output_dim]))
+
+    def sample(self, time, outputs, state, name=None):
+        # sample함수가 특별히 할 역할이 없기 때문에 그냥 garbage를 return한다.
+        return tf.tile([0], [self._batch_size])  # Return all 0; we ignore them
+
+    def next_inputs(self, time, outputs, state, sample_ids, name=None):
+        '''Stop on EOS. Otherwise, pass the last output as the next input and pass through state.'''
+        with tf.name_scope('TacoTestHelper'):
+            finished = tf.reduce_all(tf.equal(outputs, self._end_token), axis=1)
+            # Feed last output frame as next input. outputs is [N, output_dim * r]
+            next_inputs = outputs[:, -self._output_dim:]
+            return (finished, next_inputs, state)
+```
