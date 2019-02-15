@@ -12,5 +12,16 @@ Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 �
 - BasicDecoder
 - dynamic_decode
 
-#### 1. [RNNWrapper](https://github.com/hccho2/RNN-Tutorial/tree/master/1.%20RNNWrapper) 
+#### 1. [User Defined RNNWrapper](https://github.com/hccho2/RNN-Tutorial/tree/master/1.%20RNNWrapper) 
 사용자 정의 RNN Wrapper를 만드는 방법에 대하여 알아본다.
+
+
+
+#### 2. [User Defined Helper]
+주로 사용하는 TrainingHelper, GreedyEmbeddingHelper를 대신할 수 있는 사용자 정의 Helper를 만들어 보자.
+
+
+#### 3. [User Defined Decoder]
+BasicDecoder를 대체할 수 있는 사용자 정의 Decoder를 만들어 보자.
+
+
