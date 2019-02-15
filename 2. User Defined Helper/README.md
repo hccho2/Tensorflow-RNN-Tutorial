@@ -20,10 +20,11 @@ User Defined Helper는 tensorflow.contrib.seq2seq.Helper를 상속받아 구현�
 ```python
 class MyRnnHelper(Helper):
     # property(batch_size,sample_ids_dtype,sample_ids_shape)이 정의되어야 하고, initialize,sample,next_inputs이 정의되어야 한다.
-    def __init__(self,embedding,batch_size,output_dim):
+    def __init__(self,embedding,batch_size,output_dim,sequence_length):
         self._embedding = embedding
         self._batch_size = batch_size
         self._output_dim = output_dim
+        self._sequence_length = sequence_length
 
     @property
     def batch_size(self):
@@ -37,15 +38,14 @@ class MyRnnHelper(Helper):
     def sample_ids_shape(self):
         return tf.TensorShape([])   # sample_ids의 shape이 (batch_size,) 이므로, batch_size를 제외하면, "[]"이 된다.
 
-    def next_inputs(self, time, outputs, state,sample_ids, name=None):   # time+1을 위한 input을 만든다., outputs,state,sample_ids는 time step에서의 결과이다.
+    def next_inputs(self, time, outputs, state, sample_ids, name=None):   # time+1을 위한 input을 만든다., outputs,state,sample_ids는 time step에서의 결과이다.
         # 넘어오는 sample_ids는 sample 함수에어 계산된어 넘어온 값이다.   <----- 이런 계산은 BasicDecoder의 'step' 함수에서 이루어 진다.
         # next input을 계산하기 위해서 sample_ids를 이용하거나, outpus를 이용하거나 선택하면 된다.
         
         
-        finished = (time + 1 >= 7)    # finished = (time + 1 >= [7,8,9])
-        #next_inputs = outputs[:, -self._output_dim:]*2
+        next_time = time + 1
+        finished = (next_time >= self._sequence_length)
         next_inputs = tf.nn.embedding_lookup(self._embedding,sample_ids)
-        #next_inputs = tf.zeros_like(next_inputs)
         return (finished, next_inputs, state)  #finished==True이면 next_inputs,state는 의미가 없다.
 
     def initialize(self, name=None):
@@ -59,9 +59,10 @@ class MyRnnHelper(Helper):
 ```
 
 * 필수 property 3개(batch_size, sample_ids_dtype, sample_ids_shape)를 구현해야하고,
-* member function 3개(initialize,sample,next_inputs)를 구현하면 된다.
+* member function 3개(initialize,sample,next_inputs)도 구현하면 된다.
 * 필수 property들과 member function을 구현하는데 필요한 추가적인 정보가 필요하다면 __init__ 에서 받아오도록 하면 된다.
 * def initialize(self, name=None): RNN 모형에서 첫 input data를 만들어 주는 역할을 한다.
 *  def sample(self, time, outputs, state, name=None): time에서 만들어진 output, state을 조합해서 sample을 만든다. TrainingHelper에서는 argmax를 취해서 sample을 만든다.
 * def next_inputs(self, time, outputs, state,sample_ids, name=None): time step에서 만들어진 output, state와 sample함수에서 만들어진 sample_ids를 이용하여 time+1(다음 step)을 위한 입력 data를 만들어주면 된다.
+* next_inputs 함수 내에서 batch data마다 길이가 다르기 때문에, finished를 정확히 계산하려면 sequence_length를 __init__ 에서 받아와야 한다.
 
