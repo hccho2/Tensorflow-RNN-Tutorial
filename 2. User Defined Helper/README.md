@@ -42,7 +42,6 @@ class MyRnnHelper(Helper):
         # 넘어오는 sample_ids는 sample 함수에어 계산된어 넘어온 값이다.   <----- 이런 계산은 BasicDecoder의 'step' 함수에서 이루어 진다.
         # next input을 계산하기 위해서 sample_ids를 이용하거나, outpus를 이용하거나 선택하면 된다.
         
-        
         next_time = time + 1
         finished = (next_time >= self._sequence_length)
         next_inputs = tf.nn.embedding_lookup(self._embedding,sample_ids)
@@ -50,7 +49,7 @@ class MyRnnHelper(Helper):
 
     def initialize(self, name=None):
         # 시작하는 input을 정의한다.
-        # return finished, first_inputs. finished는 시작이니까, 무조건 False
+        # return (finished, first_inputs). finished는 시작이니까, 무조건 False
         # first_inputs는 예를 위해서, SOS_token으로 만들어 보았다.
         return (tf.tile([False], [self._batch_size]), tf.nn.embedding_lookup(self._embedding,tf.tile([SOS_token], [self._batch_size])))  
 
