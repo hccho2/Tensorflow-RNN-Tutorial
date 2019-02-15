@@ -4,11 +4,12 @@ User Defined Helper는 tensorflow.contrib.seq2seq.Helper를 상속받아 구현�
 ### [목차]
 * [왜 User Defined Helper가 필요한가](#왜-User-Defined-Helper가-필요한가)
 * [User Defined Helper 만들기](#User-Defined-Helper-만들기)
+* [TacotronTestHelper 만들기](#TacotronTestHelper-만들기)
 
 ### [왜 User Defined Helper가 필요한가]
 * 기본적으로 TrainingHelper, GreedyEmbeddingHelper, SampleEmbeddingHelper 등을 주로 사용한다.
 * 모델에 따라서는 이런 표준적인 Helper로 처리할 수 없는 경우가 있다. 
-* 예를 들어, [Tacotron](https://arxiv.org/abs/1703.10135) 모델의 Decoder에서 r(reduction factor, 아래 그림에서는 3)개의 output을 만들어 내고, 그 중 마지막 것을 다음 step의 input으로 넘겨주는 모델에서는 User Defined Helper가 필요하다.
+* 예를 들어, [Tacotron](https://arxiv.org/abs/1703.10135) 모델의 Decoder구조는 r(reduction factor, 아래 그림에서는 3)개의 output을 만들어 내고, 그 중 마지막 것을 다음 step의 input으로 넘겨주는 방식으로 설계되어 있다(inference 단계). 이런 모델을 구현하기 위해서는 User Defined Helper가 필요하다.
 <p align="center"><img width="300" src="tacotron-decoder.png" />  </p>
 
 * train 단계, inference 단계 각각에 맞는 Helper가 필요하다.
@@ -64,4 +65,10 @@ class MyRnnHelper(Helper):
 *  def sample(self, time, outputs, state, name=None): time에서 만들어진 output, state을 조합해서 sample을 만든다. TrainingHelper에서는 argmax를 취해서 sample을 만든다.
 * def next_inputs(self, time, outputs, state,sample_ids, name=None): time step에서 만들어진 output, state와 sample함수에서 만들어진 sample_ids를 이용하여 time+1(다음 step)을 위한 입력 data를 만들어주면 된다.
 * next_inputs 함수 내에서 batch data마다 길이가 다르기 때문에, finished를 정확히 계산하려면 sequence_length를 __init__ 에서 받아와야 한다.
+
+
+
+### [TacotronTestHelper 만들기]
+* Tacotron 모델에서 inference 단계에서 사용할 Helper를 만들어 보자. 
+
 
