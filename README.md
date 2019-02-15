@@ -18,7 +18,7 @@ Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 �
 
 
 #### 2. [User Defined Helper]
-주로 사용하는 TrainingHelper, GreedyEmbeddingHelper를 대신할 수 있는 사용자 정의 Helper를 만들어 보자.
+주로 사용하는 TrainingHelper, GreedyEmbeddingHelper, SampleEmbeddingHelper를 대신할 수 있는 사용자 정의 Helper를 만들어 보자.
 
 
 #### 3. [User Defined Decoder]
