@@ -108,3 +108,9 @@ class TacoTestHelper(Helper):
 ```
 
 * 함수 next_inputs에서 next_inputs를 계산하는 방식에만 주목하면 된다. output_dim*r 중에서 마지막 output_dim개만 return했다.
+
+
+
+---
+## Reference
+https://github.com/keithito/tacotron
