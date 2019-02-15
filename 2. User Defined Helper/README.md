@@ -56,5 +56,12 @@ class MyRnnHelper(Helper):
 
     def sample(self, time, outputs, state, name=None):
         return tf.argmax(outputs, axis=-1,output_type=tf.int32)
-        #return tf.tile([2], [self._batch_size])  # Return all 0; we ignore them
 ```
+
+* 필수 property 3개(batch_size, sample_ids_dtype, sample_ids_shape)를 구현해야하고,
+* member function 3개(initialize,sample,next_inputs)를 구현하면 된다.
+* 필수 property들과 member function을 구현하는데 필요한 추가적인 정보가 필요하다면 __init__ 에서 받아오도록 하면 된다.
+* def initialize(self, name=None): RNN 모형에서 첫 input data를 만들어 주는 역할을 한다.
+*  def sample(self, time, outputs, state, name=None): time에서 만들어진 output, state을 조합해서 sample을 만든다. TrainingHelper에서는 argmax를 취해서 sample을 만든다.
+* def next_inputs(self, time, outputs, state,sample_ids, name=None): time step에서 만들어진 output, state와 sample함수에서 만들어진 sample_ids를 이용하여 time+1(다음 step)을 위한 입력 data를 만들어주면 된다.
+
