@@ -21,7 +21,7 @@ Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 �
 
 
 
-#### 2. [User Defined Helper]
+#### 2. [User Defined Helper](https://github.com/hccho2/Tensorflow-RNN-Tutorial/tree/master/2.%20User%20Defined%20Helper)
 주로 사용하는 TrainingHelper, GreedyEmbeddingHelper, SampleEmbeddingHelper를 대신할 수 있는 사용자 정의 Helper를 만들어 보자.
 - Tacotron과 같은 모델에서는 RNN decoder를 구현하려면 사용자 정의 Helper가 반드시 필요하다.
 
