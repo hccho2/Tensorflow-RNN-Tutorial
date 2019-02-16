@@ -9,9 +9,10 @@
 
 ### [User Defined Decoder는 언제 필요한가]
 * BasicDecoder의 __init__ 함수는 다음과 같은 proto type을 가진다.
-<p align="center"><img width="300" src="BasicDecoder.png" />  </p>
+<p align="center"><img width="500" src="BasicDecoder.png" />  </p>
 
-
+* __intit__에 넘겨지는 cell이나 Helper를 표준적인 형식을 벗어나게 customization했다면, BasicDecoder를 사용할 수 없다.
+* 좀 더 구체적으로 살펴보자.
 * Helper의 next_inputs함수의 proto type은 다음과 같다.
 ```python
 def next_inputs(self, time, outputs, state, sample_ids, name=None):
