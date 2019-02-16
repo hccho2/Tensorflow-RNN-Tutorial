@@ -80,7 +80,7 @@ if __name__ == '__main__':
     x_data = np.array([[SOS_token, 3, 1, 2, 3, 2],[SOS_token, 3, 1, 2, 3, 1],[SOS_token, 1, 3, 2, 2, 1]], dtype=np.int32)
     y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_token]],dtype=np.int32)
     Y = tf.convert_to_tensor(y_data)
-'''
+```
 
 * 0(SOS),1,2,3,EOS(4) --> 모두 5개의 단어에 대하여, batch_size=3인 sample data를 만들었다.
 
