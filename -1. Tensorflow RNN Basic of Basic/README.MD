@@ -38,8 +38,6 @@ def dynamic_rnn_test():
     init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1)
     
     with tf.variable_scope('test') as scope:
-        # Make rnn
-
         cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_dim)
         cell = tf.contrib.rnn.OutputProjectionWrapper(cell,output_dim)
     
@@ -107,7 +105,7 @@ if __name__ == '__main__':
 ```python
         initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) 
 ```
-* 0이 아닌 다른 값으로 initial_state를 만들 수도 있다.
+* 필요에 따라, 0이 아닌 다른 값으로 initial_state를 만들 수도 있다.
 
 ---
 * 나머지 코드들은 test 목적으로 만든 것들로 쉽게 이해할 수 있다.
