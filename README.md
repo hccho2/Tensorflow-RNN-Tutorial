@@ -4,7 +4,10 @@
 
 `Tesorflow RNN-tutorial` is a tutorial for RNN model developers using Tensorflow.
 
-### -1. [Tensorflow RNN 기초](https://github.com/hccho2/RNN-Tutorial/tree/master/0.%20Basic)
+### -1. [Tensorflow RNN 기초](https://github.com/hccho2/Tensorflow-RNN-Tutorial/tree/master/-1.%20Tensorflow%20RNN%20Basic%20of%20Basic)
+여기서는 Tensorflow에서 RNN 모델을 시작할 수 있는 dynamic_rnn에 대해서 알아본다.
+- dynamic_rnn은 Seq2Seq(Encoder-Decoder)모델을 배우기 전에 먼저 알아야 할 기본적인 RNN 모델 API이다.
+
 
 #### 0. [Basic RNN Model](https://github.com/hccho2/RNN-Tutorial/tree/master/0.%20Basic)
 Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 작동 원리를 알 수 있다.
