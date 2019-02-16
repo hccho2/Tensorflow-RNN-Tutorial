@@ -17,7 +17,11 @@
 ```python
 def next_inputs(self, time, outputs, state, sample_ids, name=None):
 ```
-* (time, outputs, state, sample_ids,name)으로 이루어진 argument를 변경해야 하는 경우, BasicDecoder를 customization해야 한다.
+* (time, outputs, state, sample_ids,name)으로 이루어진 argument에 다음과 같이 추가적인 argument가 더해진다고 해보자.
+```python
+def next_inputs(self, time, outputs, state,  sample_ids, name=None):
+```
+* 이런 경우에는, BasicDecoder를 customization해야 한다.
 
 * 또 다른 BasciDecoder의 customization 필요성은 cell을  
 
