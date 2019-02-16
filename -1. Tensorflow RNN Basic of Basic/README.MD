@@ -92,3 +92,4 @@ if __name__ == '__main__':
 ```
 
 * 여기서는 BasicRNNCell을 사용했고, BasicRNNCell은 hidden_dim만 지정해주면 된다. BasicRNNCell을 거쳐서 나온 결과의 dimension은 당연히 hidden_dim이 되는데, 최종 결과를 만들기 위해서는 vocab_size(=output_dim)의 dimension을 가질 수 있도록 Fully-Connected-Layer를 추가해 주면 된다.
+* Tensorflow RNN모델에서 Fully-Connected-Layer는 tf.contrib.rnn.OutputProjectionWrapper를 사용하면 된다.
