@@ -3,7 +3,7 @@
 
 
 * 위 그림은 tensorflow에서 기본적인 RNN모델을 만드는데 필요한 API들의 관계를 그린 것이다.
-* 다음이 example code이다.
+* 먼저 Example Code 전체를 보고, 부분 부분 살펴보자.
 
 
 ```python
