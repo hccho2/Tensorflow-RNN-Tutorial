@@ -47,7 +47,7 @@ def dynamic_rnn_test():
         inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
     
         initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) 
-        outputs, last_state = tf.nn.dynamic_rnn(cell,inputs,initial_state=initial_state)    
+        outputs, last_state = tf.nn.dynamic_rnn(cell,inputs,sequence_length=[seq_length]*batch_size,initial_state=initial_state)    
 
         weights = tf.ones(shape=[batch_size,seq_length])
         loss =   tf.contrib.seq2seq.sequence_loss(logits=outputs, targets=Y, weights=weights)
@@ -93,3 +93,21 @@ if __name__ == '__main__':
 
 * 여기서는 BasicRNNCell을 사용했고, BasicRNNCell은 hidden_dim만 지정해주면 된다. BasicRNNCell을 거쳐서 나온 결과의 dimension은 당연히 hidden_dim이 되는데, 최종 결과를 만들기 위해서는 vocab_size(=output_dim)의 dimension을 가질 수 있도록 Fully-Connected-Layer를 추가해 주면 된다.
 * Tensorflow RNN모델에서 Fully-Connected-Layer는 tf.contrib.rnn.OutputProjectionWrapper를 사용하면 된다.
+* BasicRNNCell 대신 BasicLSTMCell,GRUCell 등을 사용할 수도 있다.
+
+---
+* inputs를 만드는 과정을 보자. embedding vector를 만든 후, embedding_lookup을 통해 단어들에 대한 embedding vector를 찾아준다.
+
+```python
+        embedding = tf.get_variable("embedding", initializer=init.astype(np.float32),dtype = tf.float32)
+        inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
+```
+---
+* 이제 initial_state를 만들어보자. 다음의 코드는 0으로된 initial_state를 만들어 준다.
+```python
+        initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) 
+```
+* 0이 아닌 다른 값으로 initial_state를 만들 수도 있다.
+
+---
+* 나머지 코드들은 test 목적으로 만든 것들로 쉽게 이해할 수 있다.
