@@ -19,7 +19,7 @@ def next_inputs(self, time, outputs, state, sample_ids, name=None):
 ```
 * (time, outputs, state, sample_ids,name)으로 이루어진 argument에 다음과 같이 추가적인 argument가 더해진다고 해보자.
 ```python
-def next_inputs(self, time, outputs, state,  sample_ids, name=None):
+def next_inputs(self, time, outputs, state, new_arg, sample_ids, name=None):
 ```
 * 이런 경우에는, BasicDecoder를 customization해야 한다.
 
