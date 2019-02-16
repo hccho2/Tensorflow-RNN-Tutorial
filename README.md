@@ -4,9 +4,11 @@
 
 `Tesorflow RNN-tutorial` is a tutorial for RNN model developers using Tensorflow.
 
+### -1. [Tensorflow RNN 기초](https://github.com/hccho2/RNN-Tutorial/tree/master/0.%20Basic)
 
 #### 0. [Basic RNN Model](https://github.com/hccho2/RNN-Tutorial/tree/master/0.%20Basic)
 Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 작동 원리를 알 수 있다.
+- dynamic_decode를 사용하여 Tensorflow RNN모델 사용법에 관해 알아본다.
 - BasicRNNCell, BasicLSTMCell, GRUCell
 - TrainingHelper, GreedyEmbeddingHelper
 - BasicDecoder
