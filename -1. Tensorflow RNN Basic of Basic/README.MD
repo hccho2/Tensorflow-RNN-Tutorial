@@ -7,7 +7,7 @@
 * Example은 (단어 3개 + SOS + EOS)로 전체 5개의 vocabulary를 가지고, embedding 처리 후, BasicRNNCell를 거친다.
 * BasicRNNCell을 거친 후에 Fully-Connected Layer(OutputProjectionWrapper)를 한번 더 거치면 최종 output이 만들어진다.
 * 정리하면, 5개의 단어를 가지고, [minimal character-level RNN language model](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)을 만들어 본다.
-* 위 그림에서 처럼, {cell, inital_state, input_data, seq_length} 이렇게 4개의 object를 만들어서 dynamic_rnn에 넘겨주면 된다.
+* 위 그림에서 처럼, {cell,  inputs, seq_length, inital_state} 이렇게 4개의 object를 만들어서 dynamic_rnn에 넘겨주면 된다.
 * 먼저 Example Code 전체를 보고, 부분 부분 살펴보자.
 
 ```python
