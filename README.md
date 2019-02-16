@@ -31,7 +31,8 @@ Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 �
 - Tacotron과 같은 모델에서는 RNN decoder를 구현하려면 사용자 정의 Helper가 반드시 필요하다.
 
 
-
+#### 3. [User Defined Decoder]
+BasicDecoder를 대체할 수 있는 사용자 정의 Decoder를 만들어 보자.
 
 
 
@@ -41,12 +42,16 @@ Tensorflow의 다음과 같은 API를 사용하여 기본적인 RNN 모델의 �
 
 
 ---
+
+---
+
+
+---
 -------- 여기서 부터는 update 예정 -----------
 
 
 
-#### 3. [User Defined Decoder]
-BasicDecoder를 대체할 수 있는 사용자 정의 Decoder를 만들어 보자.
+
 
 
 #### 4. [Attention with Tensorflow]
