@@ -22,6 +22,7 @@ def dynamic_rnn_test():
     
     x_data = np.array([[SOS_token, 3, 1, 2, 3, 2],[SOS_token, 3, 1, 2, 3, 1],[SOS_token, 1, 3, 2, 2, 1]], dtype=np.int32)
     y_data = np.array([[1,2,0,3,2,EOS_token],[3,2,3,3,1,EOS_token],[3,1,1,2,0,EOS_token]],dtype=np.int32)
+    Y = tf.convert_to_tensor(y_data)
     print("data shape: ", x_data.shape)
     sess = tf.InteractiveSession()
     
@@ -34,7 +35,7 @@ def dynamic_rnn_test():
 
     init = np.arange(vocab_size*embedding_dim).reshape(vocab_size,-1)
     
-    with tf.variable_scope('test',reuse=tf.AUTO_REUSE) as scope:
+    with tf.variable_scope('test') as scope:
         # Make rnn
 
         cell = tf.contrib.rnn.BasicRNNCell(num_units=hidden_dim)
@@ -42,8 +43,6 @@ def dynamic_rnn_test():
     
         embedding = tf.get_variable("embedding", initializer=init.astype(np.float32),dtype = tf.float32)
         inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
-    
-        Y = tf.convert_to_tensor(y_data)
     
         initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) 
         outputs, last_state = tf.nn.dynamic_rnn(cell,inputs,initial_state=initial_state)    
