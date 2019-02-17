@@ -1,4 +1,4 @@
-# 기본적으로 사용하는 BasicDecoder는 
+# 기본적으로 사용하는 BasicDecoder를 사용하지만, User Definced Help나 RNNWrapper를 사용하기 위해서는 Cumtomization이 필요하다.
 
 ### [목차]
 * [User Defined Decoder는 언제 필요한가](#User-Defined-Decoder는-언제-필요한가)
