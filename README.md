@@ -1,4 +1,4 @@
-## Tesorflow RNN-tutorial
+## Tensorflow RNN-tutorial
 
 <p align="center"><img width="700" src="TF-RNN.png" />  </p>
 
