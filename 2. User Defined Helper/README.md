@@ -62,7 +62,7 @@ class MyRnnHelper(Helper):
 * member function 3개(initialize,sample,next_inputs)도 구현하면 된다.
 * 필수 property들과 member function을 구현하는데 필요한 추가적인 정보가 필요하다면 __init__ 에서 받아오도록 하면 된다.
 * def initialize(self, name=None): RNN 모형에서 첫 input data를 만들어 주는 역할을 한다.
-*  def sample(self, time, outputs, state, name=None): time에서 만들어진 output, state을 조합해서 sample을 만든다. TrainingHelper에서는 argmax를 취해서 sample을 만든다.
+*  def sample(self, time, outputs, state, name=None): time에서 만들어진 output, state을 조합해서 sample을 만든다. 예를 들어, TrainingHelper에서는 argmax를 취해서 sample을 만들고, SampleEmbeddingHelper에서는 단순 argmax 대신 distribution을 이용해서 random sampling으로 sample을 만든다. 
 * def next_inputs(self, time, outputs, state,sample_ids, name=None): time step에서 만들어진 output, state와 sample함수에서 만들어진 sample_ids를 이용하여 time+1(다음 step)을 위한 입력 data를 만들어주면 된다.
 * next_inputs 함수 내에서 batch data마다 길이가 다르기 때문에, finished를 정확히 계산하려면 sequence_length를 __init__ 에서 받아와야 한다.
 
