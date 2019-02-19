@@ -35,7 +35,6 @@ import numpy as np
 
 tf.reset_default_graph()
 def attention_test():
-    # BasicRNNCell을 single로 쌓아 attention 적용
     vocab_size = 5
     SOS_token = 0
     EOS_token = 4
