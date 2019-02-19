@@ -36,25 +36,6 @@ BasicDecoder를 대체할 수 있는 사용자 정의 Decoder를 만들어 보�
 
 
 
-
-
-
-
-
----
-
----
--------- 여기서 부터는 update 예정 -----------
-
----
-
----
-
-
-
-
-
-
 #### 4. [Attention with Tensorflow](https://github.com/hccho2/Tensorflow-RNN-Tutorial/tree/master/4.%20Attention%20with%20Tensorflow)
 - Bahdanau Attention, Luong Attention이 Tensorflow내에서 어떻게 작동하는지에 대하여 알아 보자.
 
