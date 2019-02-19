@@ -24,7 +24,10 @@
 * attention_mechanism은 `AttentionMechanism` object를 넣어 주어야 한다.
 * `AttentionMechanism`에는 `tf.contrib.seq2seq.BahdanauAttention`, `tf.contrib.seq2seq.LuongAttention`, `tf.contrib.seq2seq.BahdanauMonotonicAttention` 등이 있다.
 
+![decode](./Attention.png)
+* Attention은 score -> softmax -> alignment -> context -> attention 순으로 계산이 된다.
 
+![decode](./Bahdanau-Luong-Attention.png)
 
 
 ## [Full Code]
