@@ -32,6 +32,13 @@ attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(num_units=11, memory=
 ```
 * 여기서 `num_units`이 score의 dimension을 결정한다.
 
+### attention_layer_size
+* `attention_layer_size`는 contex vector로 부터 attention을 구하는데 필요하다.
+* `attention_layer_size = None` 으로 설정되면 attention은 context vector로 주어진다.
+![decode](./attention-layer-size.png)
+* `attention_layer_size`가 None이 아니면 decoder hidden state와 context vector가 concat되어 Fully-Connected Layer를 한번 더 통과하여 attention vector를 만들어 낸다.
+
+
 
 ![decode](./Bahdanau-Luong-Attention.png)
 * Monotonic Attention은 score로부터 alignmnet를 계산할 때, softmax함수 대신 다른 방식 계산이 사용된다.
