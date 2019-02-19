@@ -66,6 +66,7 @@ def attention_test():
         #encoder_outputs은 Encoder의 output이다. 보통 Memory라 불린다. 여기서는 toy model이기 때문에 ranodm값을 생성하여 넣어 준다.
         encoder_outputs = tf.convert_to_tensor(np.random.normal(0,1,[batch_size,20,30]).astype(np.float32)) # 20: encoder sequence length, 30: encoder hidden dim
         
+        # encoder_outpus의 길이는 20이지만, 다음과 같이 조절할 수 있다.
         input_lengths = [5,10,20]  # encoder에 padding 같은 것이 있을 경우, attention을 주지 않기 위해
         
         # attention mechanism  # num_units = Na = 11
