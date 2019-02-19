@@ -146,3 +146,5 @@ if __name__ == '__main__':
 * encoder output shape = (N,20,30)
 ![decode](./attention-shape.png)
 
+### Quiz
+* T_e = ?
