@@ -149,4 +149,5 @@ if __name__ == '__main__':
 ### Quiz
 * T_e = ?
 * a: (N,20), h: (N,20,30) 일 때, context c를 구하는 과정을 tensorflow 연산으로 구현하라.
+
 [정답](https://github.com/hccho2/Tensorflow-RNN-Tutorial/blob/master/4.%20Attention%20with%20Tensorflow/answer.png)
