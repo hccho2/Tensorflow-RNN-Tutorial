@@ -6,3 +6,8 @@
 * Tensorflow에서는 Attention Model이 `Attention Mechanism` 이라는 개념으로 다루어진다.
 
 ![decode](./attentioin-dynamic-rnn-decode.png)
+
+* 위 그림은 Tensorflow Attention API가 이전 tutorial에서 다룬 Tensorflow의 RNN API(BasicDecoder, dynamic_decode 등)와 어떻게 연결되는지 보여주고 있다.
+* 이전에 tutorial에서 다룬 BasicRNNCell, BasicLSTMCell, GRUCell 등은 class RNNCell을 상속받아 구현된 class들이다.
+* Attention Model을 적용하기 위해서는, 이런 cell들을 대신해서 AttentionWrapper라는 class가 필요한데, 이 AttentionWrapper 또한 RNNCell class를 상속하여 구현된 class이다.
+* 
