@@ -26,9 +26,10 @@
 
 ![decode](./Attention.png)
 * Attention은 score -> softmax -> alignment -> context -> attention 순으로 계산이 된다.
+* Bahdanau Attention과 Luong Attention은 score를 계산하는 방식이 다른 것 뿐이다.
 
 ![decode](./Bahdanau-Luong-Attention.png)
-
+* Monotonic Attention은 score로부터 alignmnet를 계산할 때, softmax함수 대신 다른 방식 계산이 사용된다.
 
 ## [Full Code]
 ```python
