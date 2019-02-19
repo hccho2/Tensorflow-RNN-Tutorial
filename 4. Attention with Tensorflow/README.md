@@ -78,7 +78,7 @@ def attention_test():
                                                    alignment_history=alignment_history_flag,output_attention=True)
         cell = tf.contrib.rnn.OutputProjectionWrapper(cell,output_dim)
         
-        # 여기서 zero_state를 부르면, 위의 attentionwrapper에서 넝겨준 attention_initial_state를 가져온다. 즉, AttentionWrapperState.cell_state에는 넣어준 값이 들어있다.
+        # 여기서 zero_state를 부르면, 위의 attentionwrapper에서 넘겨준 attention_initial_state를 가져온다. 즉, AttentionWrapperState.cell_state에는 넣어준 값이 들어있다.
         initial_state = cell.zero_state(batch_size, tf.float32) # AttentionWrapperState
  
         helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size))
