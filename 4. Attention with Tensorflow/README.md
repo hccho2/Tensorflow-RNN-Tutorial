@@ -13,4 +13,13 @@
 
 ![decode](./AttentionWrapper-API.png)
 
-* 
+* AttentionWrapper의 __init__함수의 주요 argument는 {cell, attention_mechanism, attention_layer_size, output_attention, initial_cell_state}이다.
+* 이 주요 argument를 하나씩 살펴보자.
+
+### cell
+* cell에는 지금까지 다룬, BasicRNNCell, BasicLSTMCell, GRUCell 등을 넣어 주면된다.
+
+
+### attention_mechanism
+* attention_mechanism은 `AttentionMechanism` object를 넣어 주어야 한다.
+* `AttentionMechanism`에는 `tf.contrib.seq2seq.BahdanauAttention`, `tf.contrib.seq2seq.LuongAttention`, `tf.contrib.seq2seq.BahdanauMonotonicAttention` 등이 있다.
