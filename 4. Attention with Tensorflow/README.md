@@ -63,8 +63,7 @@ def attention_test():
         embedding = tf.get_variable("embedding", initializer=init.astype(np.float32),dtype = tf.float32)
         inputs = tf.nn.embedding_lookup(embedding, x_data) # batch_size  x seq_length x embedding_dim
     
-        
-    
+        #encoder_outputs은 Encoder의 output이다. 보통 Memory라 불린다. 여기서는 toy model이기 때문에 ranodm값을 생성하여 넣어 준다.
         encoder_outputs = tf.convert_to_tensor(np.random.normal(0,1,[batch_size,20,30]).astype(np.float32)) # 20: encoder sequence length, 30: encoder hidden dim
         
         input_lengths = [5,10,20]  # encoder에 padding 같은 것이 있을 경우, attention을 주지 않기 위해
