@@ -32,6 +32,10 @@ attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(num_units=11, memory=
 ```
 * 여기서 `num_units`이 score의 dimension을 결정한다.
 
+![decode](./Bahdanau-Luong-Attention.png)
+* Monotonic Attention은 score로부터 alignmnet를 계산할 때, softmax함수 대신 다른 방식 계산이 사용된다.
+
+
 ### attention_layer_size
 * `attention_layer_size`는 contex vector로 부터 attention을 구하는데 필요하다.
 * `attention_layer_size = None` 으로 설정되면 attention은 context vector로 주어진다.
@@ -39,9 +43,11 @@ attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(num_units=11, memory=
 * `attention_layer_size`가 None이 아니면 decoder hidden state와 context vector가 concat되어 Fully-Connected Layer를 한번 더 통과하여 attention vector를 만들어 낸다.
 
 
+### output_attention
+* `output_attention = True` 이면 attention vector가 RNN의 output이 된다.
+* `output_attention = False` 이면 decoder의 hidden state가 RNN의 output이 된다.
+* 어떤 모델에서는 RNN의 output으로 attentin vector와 decoder hidden state를 concat하기도 하는데, 이런 경우에는 AttentionWrapper를 customization해야 한다.
 
-![decode](./Bahdanau-Luong-Attention.png)
-* Monotonic Attention은 score로부터 alignmnet를 계산할 때, softmax함수 대신 다른 방식 계산이 사용된다.
 
 ## [Full Code]
 ```python
