@@ -27,6 +27,11 @@
 ![decode](./Attention.png)
 * Attention은 score -> softmax -> alignment -> context -> attention 순으로 계산이 된다.
 * Bahdanau Attention과 Luong Attention은 score를 계산하는 방식이 다른 것 뿐이다.
+```python
+attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(num_units=11, memory=encoder_outputs,memory_sequence_length=input_lengths,normalize=False)
+```
+* 여기서 `num_units`이 score의 dimension을 결정한다.
+
 
 ![decode](./Bahdanau-Luong-Attention.png)
 * Monotonic Attention은 score로부터 alignmnet를 계산할 때, softmax함수 대신 다른 방식 계산이 사용된다.
@@ -135,3 +140,9 @@ def attention_test():
 if __name__ == '__main__':
     attention_test()
 ```
+
+### Summary
+* input dimension = 8, hidden dimention = 6, (attention) num_units=13
+* encoder output shape = (N,20,30)
+![decode](./attention-shape.png)
+
