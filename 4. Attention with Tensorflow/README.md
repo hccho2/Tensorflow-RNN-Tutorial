@@ -142,7 +142,7 @@ if __name__ == '__main__':
 ```
 
 ### Summary
-* input dimension = 8, hidden dimention = 6, (attention) num_units=13
+* input dimension = 8, hidden dimention = 6, (attention mechanism) num_units=11, (AttentionWrapper) attention_layer_size=13
 * encoder output shape = (N,20,30)
 ![decode](./attention-shape.png)
 
