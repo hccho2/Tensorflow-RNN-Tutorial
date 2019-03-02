@@ -59,6 +59,7 @@ def next_inputs(self, time, outputs, state, new_arg, sample_ids, name=None):
 ### [BasicDecoder Cumtomization]
 * Tensorflow의 BasicDecoder [구현](https://github.com/tensorflow/tensorflow/blob/r1.12/tensorflow/contrib/seq2seq/python/ops/basic_decoder.py)을 살펴보면 생각보다 간단함을 알 수 있다.
 <p align="center"><img width="500" src="BasicDecoder2.png" />  </p>
+
 * self.cell(...)이나 self._helper.next_input(...)이 customization 되어 있다면, 상황에 맞게 BasicDecoder의 step함수를 변경하기만 하면 된다.
 
 ### [dynamic_decode]
