@@ -111,5 +111,5 @@ if __name__ == '__main__':
 * 나머지 코드들은 test 목적으로 만든 것들로 쉽게 이해할 수 있다.
 
 ---
-* tf.nn.dynamic_rnn은 teacher forcing 방식. inference 목적으로로 사용하기 위해서는 모델을 많이 수정해야 함. ==> dynamic_decode를 사용해야 한다.
+* tf.nn.dynamic_rnn은 teacher forcing 방식. inference 목적으로로 사용하기 위해서는 모델을 많이 수정해야 함. ==> tf.contrib.seq2seq.dynamic_decode를 사용해야 한다.
 
