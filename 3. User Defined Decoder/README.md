@@ -61,6 +61,8 @@ def next_inputs(self, time, outputs, state, new_arg, sample_ids, name=None):
 <p align="center"><img width="700" src="BasicDecoder2.png" />  </p>
 
 * self.cell(...)이나 self._helper.next_input(...)이 customization 되어 있다면, 상황에 맞게 BasicDecoder의 step함수를 변경하기만 하면 된다.
+* 예를 들어, cell이 2개의 output을 return한다면(e.g. Tacotron2에서 rnn cell의 return (cell_outputs, stop_token)) 이런 변형된 output을 처리하려면 BasicDecoder의 step함수를 수정해야 한다.
+* 참고: 변형된 output을 하나로 묶어 return하고, Helper에서 처리할 수 있도록 Helper만 cumtomization해도 된다.
 
 ### [dynamic_decode]
 * tf.contrib.seq2seq.dynamic_decode는 class가 아니고 함수이다.
