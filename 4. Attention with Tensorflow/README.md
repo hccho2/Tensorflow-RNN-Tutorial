@@ -158,7 +158,7 @@ if __name__ == '__main__':
 * input dimension = 8, hidden dimention = 6, (attention mechanism) num_units=11, (AttentionWrapper) attention_layer_size=13
 * encoder output shape = (N,20,30)
 ![decode](./attention-shape.png)
-* s 계산: [코드](https://gist.github.com/hccho2/81265eea686465fc0fd7aba5cbb73051)
+* e_i를 계산할 때, 행렬곱을 2가지 방법으로 할 수 있다. [코드](https://gist.github.com/hccho2/81265eea686465fc0fd7aba5cbb73051)
 ### Quiz
 * T_e = ?
 * a: (N,20), h: (N,20,30) 일 때, context c를 구하는 과정을 tensorflow 연산으로 구현하라.
