@@ -2,8 +2,6 @@
 
 <p align="center"><img width="700" src="TF-RNN.png" />  </p>
 
-- `Tensorflow RNN-tutorial` is a tutorial for RNN model developers using Tensorflow.
-- 이 tutorial 코드를 실행하기 위해서는 Tensorflow 2.2.0, tensorflow_addons 0.10.0 필요
 
 #### -1. [Tensorflow RNN Basic of Basic](https://github.com/hccho2/Tensorflow-RNN-Tutorial/tree/master/-1.%20Tensorflow%20RNN%20Basic%20of%20Basic)
 여기서는 Tensorflow에서 RNN 모델에 대한 공부를 시작할 때 배우게 되는 dynamic_rnn에 대해서 알아본다.
