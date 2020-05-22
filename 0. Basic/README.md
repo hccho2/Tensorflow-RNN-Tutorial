@@ -11,7 +11,7 @@
  
 ### [code 설명]
  * 전체 코드는 [RNN-TF-dynamic-decode.py](https://github.com/hccho2/RNN-Tutorial/blob/master/RNN-TF-dynamic-decode.py)에 있고, 이 페이지의 [아래](#full-code)에서도 확인할 수 있다.
- * 이제 코드의 시작부터 부분, 부분 설명해 보자.
+ * 이제 코드의 시작부터 차근차근 설명해 보자.
 ```python
 vocab_size = 5
 SOS_token = 0
