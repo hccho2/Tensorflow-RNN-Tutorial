@@ -79,7 +79,7 @@ with tf.variable_scope('test') as scope:
 
     initial_state = cell.zero_state(batch_size, tf.float32) #(batch_size x hidden_dim) x layer 개수 
     
-    helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size))
+    helper = tf.contrib.seq2seq.TrainingHelper(inputs, np.array([seq_length]*batch_size,dtype=np.int32))
 
     decoder = tf.contrib.seq2seq.BasicDecoder(cell=cell,helper=helper,initial_state=initial_state,output_layer=None)    
     outputs, last_state, last_sequence_lengths = tf.contrib.seq2seq.dynamic_decode(decoder=decoder,output_time_major=False,impute_finished=True,maximum_iterations=10)
